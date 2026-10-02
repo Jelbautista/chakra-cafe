@@ -1,0 +1,2224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Catálogo Chakra — Café de finca única y panetón artesanal</title>
+<meta name="description" content="Catálogo virtual de Chakra Trading Co. y Hannah mía. Escanea el QR o abre el enlace desde WhatsApp y pide por WhatsApp.">
+<meta name="theme-color" content="#1f4d3f">
+
+<!--
+================================================================================
+  DESIGN SYSTEM — declarado ANTES de cualquier componente
+================================================================================
+
+  ESCALA DE ESPACIADO (base 4)
+    4 · 8 · 12 · 16 · 24 · 32 · 48 · 64
+
+  ESCALA TIPOGRÁFICA
+    12 px  caption / badges        peso 600, tracking +0.04em
+    14 px  cuerpo secundario       peso 400–500
+    16 px  cuerpo principal        peso 400
+    20 px  título de sección       peso 700
+    24 px  título de pantalla      peso 800
+    32 px  hero                    peso 800, interlineado 1.05
+
+  TOKENS DE COLOR
+    --cafe-verde      #1f4d3f   acento CAFÉ (Chakra)
+    --cafe-verde-2    #2f7a62   acento CAFÉ, nivel claro
+    --cafe-ocre       #f2c14e   acento CAFÉ, resalte
+    --paneton-oro     #d99400   acento PANETÓN (Hannah mía)
+    --paneton-oro-2   #f5c542   acento PANETÓN, nivel claro
+    --neutro-950      #14120f   texto principal
+    --neutro-800      #2b2723   texto secundario
+    --neutro-600      #5a534b   texto terciario
+    --neutro-400      #9a9188   texto sobre fondo claro
+    --neutro-200      #e7e1d8   líneas y bordes
+    --neutro-100      #f6f2ec   fondo suave
+    --blanco          #ffffff
+    --ok              #1f7a3f   éxito / precio real
+    --supuesto        #a87407   badge 🔶
+    --edit            #c98a00   subrayado de modo edición
+    --alerta          #b3261e   error
+
+  REGLAS DE USO
+    · Dos acentos: verde para café, oro para panetón. Misma estructura, distinto acento.
+    · El acento se inyecta con --acento / --acento-2 sobre el elemento de categoría.
+    · Radios: 6 (chip) · 10 (botón) · 14 (tarjeta) · 20 (hero) · 999 (píldora).
+    · Sombras: 0 1px 2px rgba(20,18,15,.06) reposo · 0 8px 24px rgba(20,18,15,.14) elevado.
+    · Altura de fila de producto: 88 px mínimo. Zona táctil mínima: 44 px.
+    · Ningún componente se escribe antes de que este bloque esté cerrado.
+================================================================================
+-->
+
+<style>
+/* ===== TOKENS ============================================================ */
+:root{
+  --esp-1:4px; --esp-2:8px; --esp-3:12px; --esp-4:16px;
+  --esp-5:24px; --esp-6:32px; --esp-7:48px; --esp-8:64px;
+
+  --fs-1:12px; --fs-2:14px; --fs-3:16px; --fs-4:20px; --fs-5:24px; --fs-6:32px;
+
+  --cafe-verde:#1f4d3f; --cafe-verde-2:#2f7a62; --cafe-ocre:#f2c14e;
+  --paneton-oro:#d99400; --paneton-oro-2:#f5c542;
+  --neutro-950:#14120f; --neutro-800:#2b2723; --neutro-600:#5a534b;
+  --neutro-400:#9a9188; --neutro-200:#e7e1d8; --neutro-100:#f6f2ec;
+  --blanco:#fff; --ok:#1f7a3f; --supuesto:#a87407; --edit:#c98a00; --alerta:#b3261e;
+
+  --acento:var(--cafe-verde); --acento-2:var(--cafe-verde-2);
+
+  --r-1:6px; --r-2:10px; --r-3:14px; --r-4:20px; --r-p:999px;
+  --sh-1:0 1px 2px rgba(20,18,15,.06);
+  --sh-2:0 8px 24px rgba(20,18,15,.14);
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+/* ===== BASE ============================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font); font-size:var(--fs-3); line-height:1.5;
+  color:var(--neutro-950); background:var(--neutro-200);
+  -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,p,figure{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+a{color:inherit}
+img,svg{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--acento-2);outline-offset:2px;border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ===== MARCO (teléfono en escritorio) =================================== */
+.marco{
+  background:var(--blanco); display:flex; flex-direction:column;
+  min-height:100dvh; position:relative; overflow:hidden;
+}
+@media (min-width:820px){
+  body{background:
+     radial-gradient(circle at 18% 12%, rgba(47,122,98,.20), transparent 46%),
+     radial-gradient(circle at 82% 88%, rgba(245,197,66,.24), transparent 46%),
+     var(--neutro-200);}
+  .marco{
+    width:414px; margin:24px auto; height:calc(100dvh - 48px); min-height:0;
+    border-radius:28px; box-shadow:var(--sh-2); border:1px solid rgba(20,18,15,.08);
+  }
+}
+
+/* ===== BARRA SUPERIOR ==================================================== */
+.topbar{
+  display:flex; align-items:center; gap:var(--esp-2);
+  padding:var(--esp-3) var(--esp-3); background:var(--blanco);
+  border-bottom:1px solid var(--neutro-200); z-index:6; flex:0 0 auto;
+}
+.icono{
+  width:44px;height:44px;display:grid;place-items:center;border-radius:var(--r-2);
+  color:var(--neutro-800); transition:background .15s, transform .1s;
+}
+.icono:hover{background:var(--neutro-100)}
+.icono:active{transform:scale(.94)}
+.icono[aria-pressed="true"]{background:var(--acento);color:var(--blanco)}
+.topbar .titulo{flex:1;min-width:0;font-size:var(--fs-4);font-weight:800;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .titulo small{display:block;font-size:var(--fs-1);font-weight:600;
+  color:var(--neutro-600);letter-spacing:.04em;text-transform:uppercase}
+.carrito{position:relative}
+.carrito .n{
+  position:absolute;top:4px;right:2px;min-width:18px;height:18px;padding:0 4px;
+  background:var(--acento);color:#fff;border-radius:var(--r-p);
+  font-size:10px;font-weight:800;display:grid;place-items:center;line-height:1;
+}
+.carrito.vacio .n{display:none}
+
+/* ===== AVISO DE EDICIÓN ================================================== */
+.aviso-edicion{
+  display:none; align-items:center; gap:var(--esp-2); flex-wrap:wrap;
+  padding:var(--esp-2) var(--esp-3); background:#fff8e6;
+  border-bottom:1px solid #f0dca6; font-size:var(--fs-1); color:#6b4a00; flex:0 0 auto;
+}
+body[data-edit="1"] .aviso-edicion{display:flex}
+.aviso-edicion b{font-weight:800}
+.aviso-edicion .sep{flex:1}
+
+/* ===== CONTENIDO / VISTAS =============================================== */
+.vistas{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+  background:var(--blanco);position:relative;scroll-behavior:smooth}
+.vista{display:none;animation:entra .22s ease both}
+.vista.activa{display:block}
+@keyframes entra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* --- Hero portada --- */
+.hero{
+  background:linear-gradient(155deg,var(--acento) 0%, var(--acento-2) 100%);
+  color:#fff;padding:var(--esp-6) var(--esp-4) var(--esp-5);position:relative;overflow:hidden;
+}
+.hero::after{
+  content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;
+  border-radius:50%;background:rgba(255,255,255,.10);
+}
+.hero .marca{font-size:var(--fs-1);font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;opacity:.9;margin-bottom:var(--esp-2)}
+.hero h1{font-size:var(--fs-6);font-weight:800;line-height:1.05;letter-spacing:-.02em;
+  max-width:16ch;position:relative;z-index:1}
+.hero p{margin-top:var(--esp-3);font-size:var(--fs-2);line-height:1.55;
+  color:rgba(255,255,255,.92);max-width:44ch;position:relative;z-index:1}
+
+/* --- Tarjeta QR --- */
+.qr-tarjeta{
+  margin:calc(-1 * var(--esp-6)) var(--esp-4) 0;position:relative;z-index:2;
+  background:var(--blanco);border:1px solid var(--neutro-200);border-radius:var(--r-3);
+  box-shadow:var(--sh-2);padding:var(--esp-4);display:flex;gap:var(--esp-4);align-items:center;
+}
+.qr-tarjeta .caja{
+  width:104px;height:104px;flex:0 0 auto;border:1px solid var(--neutro-200);
+  border-radius:var(--r-2);padding:4px;background:#fff;
+}
+.qr-tarjeta .caja svg{width:100%;height:100%}
+.qr-tarjeta h2{font-size:var(--fs-3);font-weight:800}
+.qr-tarjeta p{font-size:var(--fs-2);color:var(--neutro-600);margin-top:2px}
+.qr-tarjeta .url{font-size:var(--fs-1);color:var(--neutro-400);word-break:break-all;margin-top:4px}
+
+/* --- Categorías --- */
+.seccion-titulo{
+  display:flex;align-items:baseline;justify-content:space-between;gap:var(--esp-3);
+  padding:var(--esp-6) var(--esp-4) var(--esp-3);
+}
+.seccion-titulo h2{font-size:var(--fs-4);font-weight:800}
+.seccion-titulo span{font-size:var(--fs-1);color:var(--neutro-600);font-weight:600}
+.rejilla{display:grid;gap:var(--esp-3);padding:0 var(--esp-4)}
+@media (min-width:520px){.rejilla{grid-template-columns:1fr 1fr}}
+.tarjeta-cat{
+  position:relative;text-align:left;border:1px solid var(--neutro-200);
+  border-radius:var(--r-3);overflow:hidden;background:var(--blanco);
+  box-shadow:var(--sh-1);transition:transform .12s, box-shadow .12s;
+  display:flex;flex-direction:column;min-height:170px;
+}
+.tarjeta-cat:hover{transform:translateY(-3px);box-shadow:var(--sh-2)}
+.tarjeta-cat:active{transform:translateY(-1px)}
+.tarjeta-cat .banda{background:var(--acento);padding:var(--esp-4);color:#fff;flex:1}
+.tarjeta-cat .banda .lema{font-size:var(--fs-1);text-transform:uppercase;
+  letter-spacing:.1em;opacity:.85;font-weight:700}
+.tarjeta-cat .banda h3{font-size:var(--fs-5);font-weight:800;margin-top:2px}
+.tarjeta-cat .pie{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--esp-3) var(--sp-4,var(--esp-4));border-top:1px solid var(--neutro-200)}
+.tarjeta-cat .pie .cuenta{font-size:var(--fs-2);color:var(--neutro-600);font-weight:600}
+.tarjeta-cat .pie .ir{display:inline-flex;align-items:center;gap:6px;
+  font-size:var(--fs-2);font-weight:800;color:var(--acento)}
+.tarjeta-cat .mini{position:absolute;right:var(--esp-3);top:var(--esp-3);width:56px;opacity:.9}
+
+/* --- Encabezado de categoría --- */
+.cat-cab{
+  background:linear-gradient(155deg,var(--acento),var(--acento-2));color:#fff;
+  padding:var(--esp-5) var(--esp-4);position:relative;overflow:hidden;
+  display:flex;align-items:center;gap:var(--esp-4);
+}
+.cat-cab .txt{flex:1;min-width:0;position:relative;z-index:1}
+.cat-cab .lema{font-size:var(--fs-1);text-transform:uppercase;letter-spacing:.12em;
+  opacity:.88;font-weight:700}
+.cat-cab h1{font-size:var(--fs-5);font-weight:800;line-height:1.1}
+.cat-cab .cuenta{font-size:var(--fs-2);opacity:.92;margin-top:4px}
+.cat-cab .arte{width:88px;flex:0 0 auto;position:relative;z-index:1}
+
+/* --- Filas de producto --- */
+.lista{padding:var(--esp-3) var(--esp-4) var(--esp-5);display:flex;flex-direction:column;gap:var(--esp-3)}
+.fila{
+  display:flex;gap:var(--esp-3);align-items:center;min-height:88px;
+  background:var(--blanco);border:1px solid var(--neutro-200);border-radius:var(--r-3);
+  padding:var(--esp-3);box-shadow:var(--sh-1);transition:transform .12s, box-shadow .12s;
+  position:relative;
+}
+.fila:hover{box-shadow:var(--sh-2)}
+.fila .mini{width:64px;height:64px;flex:0 0 auto;border-radius:var(--r-2);
+  background:var(--neutro-100);display:grid;place-items:center;overflow:hidden}
+.fila .info{flex:1;min-width:0;text-align:left}
+.fila .info h3{font-size:var(--fs-3);font-weight:700;line-height:1.25}
+.fila .info .dato{font-size:var(--fs-2);color:var(--neutro-600);margin-top:2px}
+.fila .info .precio{margin-top:4px;font-size:var(--fs-4);font-weight:800;color:var(--ok);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.fila .info .precio.nulo{color:var(--neutro-600);font-size:var(--fs-3)}
+.fila .acciones{display:flex;flex-direction:column;gap:var(--esp-2);align-items:flex-end;flex:0 0 auto}
+.btn-add{
+  min-width:64px;height:44px;padding:0 var(--esp-3);border-radius:var(--r-2);
+  background:var(--acento);color:#fff;font-weight:800;font-size:var(--fs-2);
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  transition:transform .1s, background .15s;
+}
+.btn-add:hover{filter:brightness(1.12)}
+.btn-add:active{transform:scale(.95)}
+.btn-add.hecho{background:var(--ok)}
+.fila .orden{display:none;gap:4px}
+body[data-edit="1"] .fila .orden{display:flex}
+.orden button{width:28px;height:28px;border:1px solid var(--neutro-200);border-radius:var(--r-1);
+  background:var(--neutro-100);font-size:12px;line-height:1}
+.orden button:hover{background:var(--neutro-200)}
+
+/* --- Ficha --- */
+.ficha-arte{
+  background:linear-gradient(155deg,var(--acento),var(--acento-2));
+  padding:var(--esp-5);display:grid;place-items:center;min-height:190px;
+}
+.ficha-arte svg{width:150px;height:150px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.22))}
+.ficha-cuerpo{padding:var(--esp-4) var(--esp-4) 0}
+.ficha-cuerpo h1{font-size:var(--fs-5);font-weight:800;line-height:1.15}
+.ficha-cuerpo .sub{font-size:var(--fs-2);color:var(--neutro-600);margin-top:2px}
+.ficha-precio{margin-top:var(--esp-3);display:flex;align-items:center;gap:var(--esp-3);flex-wrap:wrap}
+.ficha-precio .val{font-size:var(--fs-6);font-weight:800;color:var(--ok)}
+.ficha-precio .val.nulo{font-size:var(--fs-4);color:var(--neutro-600)}
+.ficha-precio .unidad{font-size:var(--fs-2);color:var(--neutro-600);font-weight:600}
+.bloque{margin-top:var(--esp-5)}
+.bloque h2{font-size:var(--fs-1);font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--neutro-600);margin-bottom:var(--esp-2)}
+.specs{border:1px solid var(--neutro-200);border-radius:var(--r-3);overflow:hidden}
+.specs .par{display:flex;gap:var(--esp-3);padding:var(--esp-3);
+  border-bottom:1px solid var(--neutro-200);font-size:var(--fs-2)}
+.specs .par:last-child{border-bottom:0}
+.specs .par:nth-child(odd){background:var(--neutro-100)}
+.specs .k{flex:0 0 42%;color:var(--neutro-600);font-weight:600}
+.specs .v{flex:1;font-weight:600}
+.specs .borrar{display:none;color:var(--alerta);font-weight:700;font-size:var(--fs-2)}
+body[data-edit="1"] .specs .borrar{display:inline-block}
+.txt-cuerpo{font-size:var(--fs-3);line-height:1.65;color:var(--neutro-800)}
+.nota{
+  margin-top:var(--esp-3);background:#fff8e6;border:1px solid #f0dca6;
+  border-left:4px solid var(--supuesto);border-radius:var(--r-2);
+  padding:var(--esp-3);font-size:var(--fs-2);line-height:1.6;color:#5c4200;
+}
+.nota h3{font-size:var(--fs-1);font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--supuesto);margin-bottom:4px}
+.cantidad{display:flex;align-items:center;gap:var(--esp-3);margin-top:var(--esp-5)}
+.cantidad .lbl{font-size:var(--fs-2);font-weight:700;color:var(--neutro-600)}
+.stepper{display:flex;align-items:center;border:1px solid var(--neutro-200);
+  border-radius:var(--r-2);overflow:hidden;background:var(--blanco)}
+.stepper button{width:44px;height:44px;font-size:20px;font-weight:700;display:grid;place-items:center}
+.stepper button:hover{background:var(--neutro-100)}
+.stepper input{width:56px;height:44px;text-align:center;border:0;
+  border-left:1px solid var(--neutro-200);border-right:1px solid var(--neutro-200);
+  font-weight:800;background:transparent;-moz-appearance:textfield}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.accion-fija{
+  position:sticky;bottom:0;margin-top:var(--esp-5);
+  background:var(--blanco);border-top:1px solid var(--neutro-200);
+  padding:var(--esp-3) var(--esp-4) calc(var(--esp-3) + env(safe-area-inset-bottom));
+  display:flex;gap:var(--esp-3);align-items:center;box-shadow:0 -6px 18px rgba(20,18,15,.06);
+}
+.btn-primario{
+  flex:1;min-height:52px;border-radius:var(--r-2);background:var(--acento);color:#fff;
+  font-weight:800;font-size:var(--fs-3);display:inline-flex;align-items:center;
+  justify-content:center;gap:var(--esp-2);transition:transform .1s,filter .15s;padding:0 var(--esp-4);
+}
+.btn-primario:hover{filter:brightness(1.12)}
+.btn-primario:active{transform:scale(.98)}
+.btn-secundario{
+  min-height:48px;padding:0 var(--esp-4);border-radius:var(--r-2);
+  border:1px solid var(--neutro-200);background:var(--blanco);
+  font-weight:700;font-size:var(--fs-2);display:inline-flex;align-items:center;
+  justify-content:center;gap:var(--esp-2);
+}
+.btn-secundario:hover{background:var(--neutro-100)}
+.btn-wa{background:#128c4b}
+.btn-wa:hover{filter:brightness(1.08)}
+
+/* --- Pedido --- */
+.pedido-res{padding:var(--esp-4)}
+.res-fila{display:flex;gap:var(--esp-3);align-items:center;padding:var(--esp-3) 0;
+  border-bottom:1px solid var(--neutro-200)}
+.res-fila .n{flex:1;min-width:0}
+.res-fila .n h3{font-size:var(--fs-3);font-weight:700}
+.res-fila .n .u{font-size:var(--fs-1);color:var(--neutro-600);margin-top:2px}
+.res-fila .sub{font-weight:800;font-size:var(--fs-3);color:var(--ok);
+  min-width:88px;text-align:right}
+.res-fila .borrar{color:var(--alerta);font-size:18px;width:32px;height:32px;
+  display:grid;place-items:center;border-radius:var(--r-1)}
+.res-fila .borrar:hover{background:#fdecea}
+.total-fila{display:flex;justify-content:space-between;align-items:center;
+  padding:var(--esp-4) 0;border-bottom:3px solid var(--neutro-950);margin-bottom:var(--esp-4)}
+.total-fila .t{font-size:var(--fs-3);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.total-fila .v{font-size:var(--fs-5);font-weight:800;color:var(--ok)}
+.campo{margin-bottom:var(--esp-3)}
+.campo label{display:block;font-size:var(--fs-1);font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--neutro-600);margin-bottom:6px}
+.campo input[type=text],.campo textarea{
+  width:100%;min-height:48px;padding:var(--esp-3);border:1px solid var(--neutro-200);
+  border-radius:var(--r-2);background:var(--neutro-100);font-size:var(--fs-3);
+}
+.campo textarea{min-height:80px;resize:vertical}
+.campo input:focus,.campo textarea:focus{background:var(--blanco);border-color:var(--acento-2)}
+.radios{display:flex;gap:var(--esp-2)}
+.radios label{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  min-height:48px;border:1px solid var(--neutro-200);border-radius:var(--r-2);
+  background:var(--neutro-100);font-size:var(--fs-2);font-weight:700;
+  text-transform:none;letter-spacing:0;color:var(--neutro-800);cursor:pointer;margin:0;
+}
+.radios input{accent-color:var(--acento)}
+.radios label:has(input:checked){background:#eaf3ef;border-color:var(--acento-2);color:var(--acento)}
+.pista{font-size:var(--fs-2);color:var(--neutro-600);margin-top:var(--esp-2);text-align:center}
+.vacio{text-align:center;padding:var(--esp-7) var(--esp-4);color:var(--neutro-600)}
+.vacio .grande{font-size:44px;margin-bottom:var(--esp-3)}
+
+/* --- Banda inferior del pedido --- */
+.barra-pedido{
+  display:none;flex:0 0 auto;align-items:center;gap:var(--esp-3);
+  background:var(--neutro-950);color:#fff;padding:var(--esp-3) var(--esp-4);
+  padding-bottom:calc(var(--esp-3) + env(safe-area-inset-bottom));
+}
+.barra-pedido.visible{display:flex}
+.marco[data-vista="ficha"] .barra-pedido,
+.marco[data-vista="pedido"] .barra-pedido{display:none!important}
+.barra-pedido .info{flex:1;min-width:0}
+.barra-pedido .info .n{font-size:var(--fs-1);text-transform:uppercase;
+  letter-spacing:.08em;opacity:.72;font-weight:700}
+.barra-pedido .info .v{font-size:var(--fs-4);font-weight:800}
+.barra-pedido .ir{
+  min-height:44px;padding:0 var(--esp-4);border-radius:var(--r-2);
+  background:var(--blanco);color:var(--neutro-950);font-weight:800;font-size:var(--fs-2);
+  display:inline-flex;align-items:center;gap:6px;
+}
+
+/* --- Pie --- */
+.pie{
+  flex:0 0 auto;background:var(--neutro-100);border-top:1px solid var(--neutro-200);
+  padding:var(--esp-4);display:flex;gap:var(--esp-4);align-items:center;
+}
+.pie .caja{width:76px;height:76px;flex:0 0 auto;background:#fff;border:1px solid var(--neutro-200);
+  border-radius:var(--r-2);padding:4px}
+.pie .caja svg{width:100%;height:100%}
+.pie .t{flex:1;min-width:0}
+.pie .t h3{font-size:var(--fs-2);font-weight:800}
+.pie .t p{font-size:var(--fs-1);color:var(--neutro-600);line-height:1.5;margin-top:2px}
+.pie .t .aviso{color:var(--supuesto);font-weight:600;margin-top:6px}
+.pie .enlace{font-size:var(--fs-1);font-weight:800;color:var(--acento);
+  text-decoration:underline;margin-top:6px;display:inline-block}
+
+/* ===== BADGES ============================================================ */
+.badge{
+  display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-1);
+  font-weight:700;padding:2px 7px;border-radius:var(--r-p);line-height:1.5;white-space:nowrap;
+}
+.badge.supuesto{background:#fdf1d6;color:var(--supuesto);border:1px solid #f0dca6}
+.badge.modificado{background:#fff2d1;color:#8a5a00;border:1px solid #f0dca6}
+.badge.real{background:#e6f4ea;color:var(--ok);border:1px solid #bfe3cb}
+.badge.linea{background:var(--neutro-100);color:var(--neutro-600);border:1px solid var(--neutro-200)}
+
+/* ===== MODO EDICIÓN ====================================================== */
+body[data-edit="1"] [data-campo]{
+  outline:none;cursor:text;background:rgba(201,138,0,.10);
+  box-shadow:inset 0 -2px 0 var(--edit);border-radius:3px;
+  transition:background .15s;
+}
+body[data-edit="1"] [data-campo]:hover{background:rgba(201,138,0,.20)}
+body[data-edit="1"] [data-campo]:focus{
+  background:#fff;box-shadow:inset 0 -2px 0 var(--edit),0 0 0 3px rgba(201,138,0,.35);
+}
+body[data-edit="1"] [data-campo][data-tipo="num"]{font-variant-numeric:tabular-nums}
+.btn-editar{
+  display:none;gap:6px;align-items:center;min-height:44px;padding:0 var(--esp-3);
+  border:1px solid var(--neutro-200);border-radius:var(--r-2);background:var(--blanco);
+  font-size:var(--fs-1);font-weight:800;color:var(--neutro-800);
+}
+body[data-edit="1"] .btn-editar{display:inline-flex}
+.btn-editar:hover{background:var(--neutro-100)}
+.aviso-edicion .btn-editar{min-height:32px}
+.acciones-edit{display:none;gap:6px;flex-wrap:wrap;padding:0 var(--esp-4) var(--esp-3);
+  border-bottom:1px solid var(--neutro-200);background:#fffdf7}
+body[data-edit="1"] .acciones-edit{display:flex}
+.acciones-edit button{
+  min-height:36px;padding:0 var(--esp-3);border:1px solid var(--neutro-200);
+  border-radius:var(--r-2);background:var(--blanco);font-size:var(--fs-1);font-weight:800;
+}
+.acciones-edit button:hover{background:var(--neutro-100)}
+.acciones-edit button.peligro{color:var(--alerta);border-color:#f3c9c6}
+.acciones-edit .num{color:var(--neutro-600);font-weight:700;margin-left:auto;align-self:center}
+.edit-ficha{display:none;gap:var(--esp-2);flex-wrap:wrap;align-items:center;
+  margin-top:var(--esp-4);padding:var(--esp-3);border:1px dashed var(--edit);
+  border-radius:var(--r-2);background:#fffdf7}
+body[data-edit="1"] .edit-ficha{display:flex}
+.edit-ficha select{min-height:36px;border:1px solid var(--neutro-200);border-radius:var(--r-1);
+  background:#fff;font-size:var(--fs-2);padding:0 var(--esp-2)}
+.edit-ficha button{min-height:36px;padding:0 var(--esp-3);border:1px solid var(--neutro-200);
+  border-radius:var(--r-1);background:#fff;font-size:var(--fs-1);font-weight:800}
+.edit-ficha button.peligro{color:var(--alerta);border-color:#f3c9c6}
+.edit-add{display:none;gap:var(--esp-2);margin-top:var(--esp-3)}
+body[data-edit="1"] .edit-add{display:flex}
+.edit-add button{min-height:40px;padding:0 var(--esp-3);border:1px dashed var(--edit);
+  border-radius:var(--r-2);background:#fffdf7;font-size:var(--fs-2);font-weight:700;color:#8a5a00}
+
+/* ===== MODAL ============================================================= */
+.modal{position:fixed;inset:0;background:rgba(20,18,15,.55);display:none;
+  z-index:40;align-items:flex-end;justify-content:center;padding:0}
+.modal.abierto{display:flex}
+@media (min-width:820px){.modal{align-items:center;padding:var(--esp-4)}}
+.modal .hoja{
+  background:var(--blanco);width:100%;max-width:520px;max-height:88dvh;overflow-y:auto;
+  border-radius:var(--r-4) var(--r-4) 0 0;padding:var(--esp-5) var(--esp-4);
+  animation:sube .2s ease both;
+}
+@media (min-width:820px){.modal .hoja{border-radius:var(--r-4)}}
+@keyframes sube{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+.modal h2{font-size:var(--fs-4);font-weight:800;margin-bottom:var(--esp-1)}
+.modal .sub{font-size:var(--fs-2);color:var(--neutro-600);margin-bottom:var(--esp-4)}
+.modal .cierra{position:absolute;right:var(--esp-3);top:var(--esp-3)}
+.bloque-dato{border-top:1px solid var(--neutro-200);padding-top:var(--esp-3);margin-top:var(--sp-3,var(--esp-3))}
+.bloque-dato h3{font-size:var(--fs-1);font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--neutro-600);margin-bottom:var(--esp-2)}
+
+/* ===== SKELETON ========================================================== */
+.sk{background:linear-gradient(90deg,var(--neutro-100) 25%,#efeae2 37%,var(--neutro-100) 63%);
+  background-size:400% 100%;animation:shimmer 1.2s ease-in-out infinite;border-radius:var(--r-2)}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+.sk-fila{height:88px;border-radius:var(--r-3)}
+.sk-linea{height:14px;margin-bottom:8px}
+.sk-hero{height:210px;border-radius:0}
+
+/* ===== MODO CARTEL ======================================================= */
+.cartel{position:fixed;inset:0;background:var(--neutro-950);color:#fff;z-index:60;
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  padding:var(--esp-6) var(--esp-4);text-align:center;gap:var(--esp-4);overflow:auto}
+.cartel.abierto{display:flex}
+.cartel .marca{font-size:var(--fs-1);letter-spacing:.18em;text-transform:uppercase;
+  opacity:.75;font-weight:700}
+.cartel h1{font-size:var(--fs-6);font-weight:800;line-height:1.05;max-width:14ch}
+.cartel .caja{background:#fff;padding:var(--esp-3);border-radius:var(--r-3);
+  box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.cartel .caja svg{width:min(64vw,300px);height:min(64vw,300px)}
+.cartel .instr{font-size:var(--fs-4);font-weight:800;color:var(--paneton-oro-2)}
+.cartel .url{font-size:var(--fs-2);color:rgba(255,255,255,.72);word-break:break-all;max-width:36ch}
+.cartel .botones{display:flex;gap:var(--esp-3);flex-wrap:wrap;justify-content:center}
+.cartel .btn-secundario{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+.cartel .btn-secundario:hover{background:rgba(255,255,255,.12)}
+
+/* ===== ERROR VISIBLE (nunca pantalla en blanco) ========================= */
+#caja-error{
+  position:fixed;left:12px;right:12px;bottom:12px;z-index:90;display:none;
+  background:#fdecea;border:2px solid var(--alerta);border-radius:var(--r-3);
+  padding:var(--esp-4);box-shadow:var(--sh-2);color:#7a1b14;
+}
+#caja-error.visible{display:block}
+#caja-error h3{font-size:var(--fs-3);font-weight:800;margin-bottom:6px}
+#caja-error pre{margin:6px 0 0;font-size:11px;white-space:pre-wrap;word-break:break-word;
+  background:#fff;border-radius:var(--r-1);padding:8px;max-height:120px;overflow:auto}
+#caja-error button{margin-top:var(--esp-3);min-height:40px;padding:0 var(--esp-4);
+  background:var(--alerta);color:#fff;border-radius:var(--r-2);font-weight:800;font-size:var(--fs-2)}
+
+/* ===== TOAST ============================================================= */
+#toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);z-index:80;
+  background:var(--neutro-950);color:#fff;padding:12px 18px;border-radius:var(--r-p);
+  font-size:var(--fs-2);font-weight:700;opacity:0;pointer-events:none;
+  transition:opacity .2s, transform .2s;box-shadow:var(--sh-2);max-width:88vw;text-align:center;
+}
+#toast.visible{opacity:1;transform:translate(-50%,0)}
+
+/* ===== ACCESIBILIDAD ===================================================== */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+
+/* ===== IMPRESIÓN (cartel) ================================================ */
+@media print{
+  body *{visibility:hidden}
+  #cartel,#cartel *{visibility:visible}
+  #cartel{position:absolute;inset:0;background:#fff;color:#000;display:block}
+  #cartel .caja{box-shadow:none;border:2px solid #000}
+  #cartel .instr{color:#000}
+  #cartel .url{color:#333}
+  #cartel .botones{display:none}
+}
+</style>
+</head>
+
+<body data-edit="0">
+
+<div id="caja-error" role="alert">
+  <h3>⚠️ Algo falló al dibujar el catálogo</h3>
+  <div id="caja-error-msg">Error desconocido.</div>
+  <pre id="caja-error-det"></pre>
+  <button type="button" onclick="location.reload()">Recargar</button>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<div class="marco" id="marco" data-vista="portada">
+
+  <!-- ============ BARRA SUPERIOR ============ -->
+  <header class="topbar">
+    <button class="icono" id="btn-atras" type="button" aria-label="Volver" hidden>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="titulo" id="titulo-app">Chakra <small>Catálogo virtual</small></div>
+    <button class="icono" id="btn-edit" type="button" aria-label="Modo edición" aria-pressed="false" title="Modo edición">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+    </button>
+    <button class="icono carrito vacio" id="btn-carrito" type="button" aria-label="Ver pedido">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="n" id="n-carrito">0</span>
+    </button>
+  </header>
+
+  <!-- ============ AVISO DE EDICIÓN ============ -->
+  <div class="aviso-edicion">
+    <b>✏️ Modo edición activo</b>
+    <span>Los campos con subrayado ámbar se escriben directo.</span>
+    <span class="sep"></span>
+    <button class="btn-editar" type="button" data-acc="ajustes">⚙️ Datos y ajustes</button>
+    <button class="btn-editar" type="button" data-acc="exportar">⬇ Exportar</button>
+    <button class="btn-editar" type="button" data-acc="importar">⬆ Importar</button>
+    <button class="btn-editar" type="button" data-acc="deshacer">↩ Deshacer</button>
+    <button class="btn-editar" type="button" data-acc="restablecer">♻ Restablecer</button>
+  </div>
+
+  <!-- ============ BARRA DE ACCIONES DE EDICIÓN ============ -->
+  <div class="acciones-edit">
+    <span class="num" id="cont-mod">0 campos modificados</span>
+  </div>
+
+  <!-- ============ VISTAS ============ -->
+  <main class="vistas" id="vistas" tabindex="-1">
+
+    <!-- PORTADA -->
+    <section class="vista activa" id="v-portada" aria-label="Portada">
+      <div class="hero">
+        <div class="marca" data-campo="config.marca" data-tipo="txt">Chakra Trading Co.</div>
+        <h1 data-campo="config.heroTitulo" data-tipo="txt">Café de finca única y panetón artesanal</h1>
+        <p data-campo="config.heroTexto" data-tipo="txt">Del cafetal de Santa Rosa de Sangareni a tu mesa. Escanea, elige y pide por WhatsApp.</p>
+      </div>
+
+      <div class="qr-tarjeta">
+        <div class="caja" id="qr-portada" aria-hidden="true"></div>
+        <div class="txt" style="flex:1;min-width:0">
+          <h2>Escanea y comparte</h2>
+          <p>Apunta la cámara al código y abre este catálogo en tu celular.</p>
+          <div class="url" data-campo="config.url" data-tipo="txt" id="url-portada"></div>
+          <button class="btn-editar" type="button" data-acc="cartel" style="margin-top:8px">🔳 Ver cartel QR</button>
+        </div>
+      </div>
+
+      <div class="seccion-titulo">
+        <h2>Categorías</h2>
+        <span id="cuenta-total"></span>
+      </div>
+      <div class="rejilla" id="cats-portada"></div>
+
+      <div class="seccion-titulo">
+        <h2>Cómo pedir</h2>
+      </div>
+      <div class="rejilla" style="padding-bottom:24px">
+        <div class="fila" style="min-height:auto;align-items:flex-start">
+          <div class="mini" style="background:#eaf3ef;color:var(--acento);font-weight:800">1</div>
+          <div class="info"><h3>Elige tus productos</h3><div class="dato">Suma lo que quieras desde cualquier categoría.</div></div>
+        </div>
+        <div class="fila" style="min-height:auto;align-items:flex-start">
+          <div class="mini" style="background:#eaf3ef;color:var(--acento);font-weight:800">2</div>
+          <div class="info"><h3>Revisa el pedido</h3><div class="dato">Total en soles, nombre y dirección de entrega.</div></div>
+        </div>
+        <div class="fila" style="min-height:auto;align-items:flex-start">
+          <div class="mini" style="background:#eaf3ef;color:var(--acento);font-weight:800">3</div>
+          <div class="info"><h3>Envíalo por WhatsApp</h3><div class="dato">Se abre el chat con el pedido escrito. Tú solo presionas enviar.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORÍA -->
+    <section class="vista" id="v-categoria" aria-label="Categoría"></section>
+
+    <!-- FICHA -->
+    <section class="vista" id="v-ficha" aria-label="Ficha de producto"></section>
+
+    <!-- PEDIDO -->
+    <section class="vista" id="v-pedido" aria-label="Tu pedido"></section>
+
+  </main>
+
+  <!-- ============ BANDA INFERIOR DEL PEDIDO ============ -->
+  <div class="barra-pedido" id="barra-pedido">
+    <div class="info">
+      <div class="n" id="barra-n">0 productos</div>
+      <div class="v" id="barra-total">S/ 0,00</div>
+    </div>
+    <button class="ir" type="button" id="barra-ir">Ver pedido →</button>
+  </div>
+
+  <!-- ============ PIE ============ -->
+  <footer class="pie">
+    <div class="caja" id="qr-pie" aria-hidden="true"></div>
+    <div class="t">
+      <h3>Escanea y pide por WhatsApp</h3>
+      <p id="pie-url"></p>
+      <p class="aviso">Los valores marcados con 🔶 son estimaciones por validar.</p>
+      <button class="enlace" type="button" data-acc="cartel">Ver cartel QR para imprimir</button>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============ MODAL DATOS Y AJUSTES ============ -->
+<div class="modal" id="modal-ajustes" role="dialog" aria-modal="true" aria-labelledby="aj-tit">
+  <div class="hoja" style="position:relative">
+    <button class="icono cierra" type="button" data-acc="cerrar-modal" aria-label="Cerrar">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <h2 id="aj-tit">⚙️ Datos y ajustes</h2>
+    <p class="sub">Todo lo que cambies aquí se guarda en este navegador. Usa <b>Exportar</b> para respaldarlo.</p>
+
+    <div class="bloque-dato">
+      <h3>WhatsApp</h3>
+      <div class="campo">
+        <label for="aj-num">Número con código de país, sin signos</label>
+        <input type="text" id="aj-num" inputmode="numeric" data-campo="config.numero" data-tipo="txt" placeholder="51999999999">
+        <p class="pista" style="text-align:left;margin-top:6px">Ejemplo Perú: <b>51</b> + 9 dígitos. Hoy: <span id="aj-num-v"></span></p>
+      </div>
+    </div>
+
+    <div class="bloque-dato">
+      <h3>URL pública (la que codifica el QR)</h3>
+      <div class="campo">
+        <label for="aj-url">Dirección donde se publica el catálogo</label>
+        <input type="text" id="aj-url" data-campo="config.url" data-tipo="txt" placeholder="https://jelbautista.github.io/chakra-cafe/catalogo-chakra.html">
+        <p class="pista" style="text-align:left;margin-top:6px" id="aj-url-aviso"></p>
+      </div>
+    </div>
+
+    <div class="bloque-dato">
+      <h3>Marca y textos</h3>
+      <div class="campo"><label for="aj-marca">Nombre de marca</label>
+        <input type="text" id="aj-marca" data-campo="config.marca" data-tipo="txt"></div>
+      <div class="campo"><label for="aj-tit2">Título del hero</label>
+        <input type="text" id="aj-tit2" data-campo="config.heroTitulo" data-tipo="txt"></div>
+      <div class="campo"><label for="aj-zona">Zona de entrega</label>
+        <input type="text" id="aj-zona" data-campo="config.zona" data-tipo="txt"></div>
+    </div>
+
+    <div class="bloque-dato">
+      <h3>Categorías</h3>
+      <div class="campo"><label for="aj-cat0">Nombre — categoría 1 (café)</label>
+        <input type="text" id="aj-cat0" data-campo="categorias.0.nombre" data-tipo="txt"></div>
+      <div class="campo"><label for="aj-cat0l">Lema — categoría 1</label>
+        <input type="text" id="aj-cat0l" data-campo="categorias.0.lema" data-tipo="txt"></div>
+      <div class="campo"><label for="aj-cat1">Nombre — categoría 2 (panetón)</label>
+        <input type="text" id="aj-cat1" data-campo="categorias.1.nombre" data-tipo="txt"></div>
+      <div class="campo"><label for="aj-cat1l">Lema — categoría 2</label>
+        <input type="text" id="aj-cat1l" data-campo="categorias.1.lema" data-tipo="txt"></div>
+    </div>
+
+    <div class="bloque-dato">
+      <h3>Respaldo</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-secundario" type="button" data-acc="exportar">⬇ Exportar JSON</button>
+        <button class="btn-secundario" type="button" data-acc="importar">⬆ Importar JSON</button>
+        <button class="btn-secundario" type="button" data-acc="deshacer">↩ Deshacer</button>
+        <button class="btn-secundario" type="button" data-acc="restablecer" style="color:var(--alerta)">♻ Restablecer</button>
+      </div>
+    </div>
+
+    <div style="margin-top:24px">
+      <button class="btn-primario" type="button" data-acc="cerrar-modal">Listo</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="input-import" accept="application/json,.json" hidden>
+
+<!-- ============ CARTEL QR ============ -->
+<div class="cartel" id="cartel" role="dialog" aria-modal="true" aria-label="Cartel QR">
+  <div class="marca" id="cartel-marca">Chakra Trading Co.</div>
+  <h1>Catálogo virtual</h1>
+  <div class="caja" id="qr-cartel"></div>
+  <div class="instr">📲 Escanea y pide por WhatsApp</div>
+  <div class="url" id="cartel-url"></div>
+  <div class="botones">
+    <button class="btn-secundario" type="button" data-acc="imprimir">🖨 Imprimir</button>
+    <button class="btn-secundario" type="button" data-acc="salir-cartel">← Volver al catálogo</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ==================================================================
+   MANEJADOR DE ERRORES GLOBAL — se registra primero para que nada
+   pueda dejar la pantalla en blanco sin aviso.
+================================================================== */
+function cajaError(msg, det){
+  try{
+    var c = document.getElementById('caja-error');
+    document.getElementById('caja-error-msg').textContent = String(msg);
+    document.getElementById('caja-error-det').textContent = String(det || '(sin detalle)');
+    c.classList.add('visible');
+  }catch(e){}
+}
+window.addEventListener('error', function(e){
+  cajaError('Se produjo un error al renderizar.', (e.message||'') + (e.lineno?('\nLínea '+e.lineno):''));
+});
+window.addEventListener('unhandledrejection', function(e){
+  cajaError('Promesa rechazada sin capturar.', (e && e.reason) ? String(e.reason) : '');
+});
+
+/* ==================================================================
+   DATOS SEMILLA — una sola fuente de verdad
+================================================================== */
+var CATALOGO_SEED = {
+  config: {
+    marca: 'Chakra Trading Co.',
+    marcaCorta: 'Chakra',
+    heroTitulo: 'Café de finca única y panetón artesanal',
+    heroTexto: 'Del cafetal de Santa Rosa de Sangareni a tu mesa. Escanea, elige y pide por WhatsApp.',
+    numero: '51999999999',
+    numeroEjemplo: true,
+    url: 'https://jelbautista.github.io/chakra-cafe/catalogo-chakra.html',
+    urlEjemplo: false,
+    zona: 'Lima Metropolitana · Ate y distritos aledaños',
+    whatsappTexto: 'WhatsApp abre el chat con tu pedido escrito. Solo presiona enviar.'
+  },
+  categorias: [
+    { id:'cafe',    nombre:'Café',    lema:'De una sola finca',              acento:'verde' },
+    { id:'paneton', nombre:'Panetón', lema:'Andino, proteico y artesanal',   acento:'oro'   }
+  ],
+  productos: [
+    {
+      id:'cafe-250', cat:'cafe', ilustracion:'cafe',
+      nombre:'Café tostado 250 g',
+      subtitulo:'Tostado medio · lote único',
+      precio:32, origen:'real',
+      descripcion:'Café arábica de la finca Santa Rosa de Sangareni, a 15 km de Pangoa (Satipo, Junín). Cultivado bajo sombra de árboles y manejado con compost y materia vegetal, sin agroquímicos sintéticos. Se tuesta por maquila en lotes pequeños y se envasa con válvula para conservar el aroma.',
+      nota:'Perfil indicado: chocolate, frutos secos y caramelo. El puntaje de catación objetivo es 82–85 puntos SCA; todavía no se ha registrado una catación certificada del lote.',
+      notaOrigen:'supuesto',
+      specs:[
+        ['Contenido neto','250 g'],
+        ['Origen','Santa Rosa de Sangareni, Pangoa (Satipo)'],
+        ['Cultivo','Bajo sombra de árboles'],
+        ['Manejo','Compost y materia vegetal · sin agroquímicos sintéticos'],
+        ['Proceso','Lavado · lote único trazable'],
+        ['Vida útil','45 días desde el tueste']
+      ]
+    },
+    {
+      id:'cafe-1kg', cat:'cafe', ilustracion:'cafe',
+      nombre:'Café tostado 1 kg',
+      subtitulo:'La misma taza, mejor precio',
+      precio:128, origen:'supuesto',
+      descripcion:'La presentación de mayor rendimiento para quien toma café todos los días. El mismo grano de finca única, tostado por maquila y envasado en bolsa de kilo con válvula.',
+      nota:'Precio derivado del formato de 250 g (4 × S/ 32,00). No está validado con el costo real de envasado; confirmar antes de publicar.',
+      notaOrigen:'supuesto',
+      specs:[
+        ['Contenido neto','1 kg'],
+        ['Origen','Santa Rosa de Sangareni, Pangoa (Satipo)'],
+        ['Cultivo','Bajo sombra de árboles'],
+        ['Tueste','Medio, por maquila en lotes pequeños'],
+        ['Vida útil','45 días desde el tueste']
+      ]
+    },
+    {
+      id:'cafe-mayorista', cat:'cafe', ilustracion:'cafe',
+      nombre:'Café para cafeterías y reventa',
+      subtitulo:'Mayorista · cotización directa',
+      precio:null, origen:'supuesto',
+      descripcion:'Venta por volumen para cafeterías, oficinas y reventa. El precio se cotiza según volumen, frecuencia y forma de pago, y se acuerda directo por WhatsApp.',
+      nota:'El catálogo público no muestra el precio mayorista. La cotización se define caso por caso y queda registrada en el panel interno.',
+      notaOrigen:'supuesto',
+      specs:[
+        ['Formato','A convenir (kg o quintales)'],
+        ['Presentación','Grano entero o molido'],
+        ['Canal','B2B · cafeterías y reventa'],
+        ['Precio','Por cotizar']
+      ]
+    },
+    {
+      id:'paneton-origen', cat:'paneton', ilustracion:'paneton',
+      nombre:'Panetón Café Origen',
+      subtitulo:'Café de finca única · edición navideña',
+      precio:35, origen:'real',
+      descripcion:'Panetón artesanal elaborado con harinas andinas de quinua y kañihua, proteína vegetal y frutos secos nobles. Lleva 18–20 g de café tostado de la misma finca: el aroma despierta sin dominar el sabor. Se hornea contra pedido, en lotes pequeños.',
+      nota:'Se produce contra pedido y se despacha dentro de su vida útil de 30–45 días. Las tres líneas comparten precio: Café Origen, Café + Cacao y Café Proteico.',
+      notaOrigen:'real',
+      specs:[
+        ['Contenido neto','900 g'],
+        ['Línea','Café Origen'],
+        ['Proteína','15–18 g / 100 g'],
+        ['Café','18–20 g por unidad, de la misma finca'],
+        ['Vida útil','30–45 días'],
+        ['Temporada','Octubre – diciembre'],
+        ['Producción','Contra pedido, nunca contra stock']
+      ]
+    },
+    {
+      id:'paneton-cacao', cat:'paneton', ilustracion:'paneton',
+      nombre:'Panetón Café + Cacao',
+      subtitulo:'Cacao 70 % peruano · perfil adulto',
+      precio:35, origen:'real',
+      descripcion:'El abrazo natural entre el café de la finca y el cacao peruano. Dulzor contenido, con chips de chocolate oscuro, nibs de cacao y almendras tostadas. Pensado para sobremesas largas y regalos de fin de año.',
+      nota:'Se produce contra pedido y se despacha dentro de su vida útil de 30–45 días. Las tres líneas comparten precio.',
+      notaOrigen:'real',
+      specs:[
+        ['Contenido neto','900 g'],
+        ['Línea','Café + Cacao'],
+        ['Proteína','15–18 g / 100 g'],
+        ['Inclusiones','Chocolate 70 %, nibs de cacao, almendras'],
+        ['Vida útil','30–45 días'],
+        ['Temporada','Octubre – diciembre'],
+        ['Producción','Contra pedido, nunca contra stock']
+      ]
+    },
+    {
+      id:'paneton-proteico', cat:'paneton', ilustracion:'paneton',
+      nombre:'Panetón Café Proteico',
+      subtitulo:'Alto en proteína vegetal · bajo en azúcar',
+      precio:35, origen:'real',
+      descripcion:'Panetón para gente activa: espresso concentrado, proteína vegetal y azúcar reducida. Miga tierna, aroma a café y un perfil pensado para el desayuno navideño.',
+      nota:'Se produce contra pedido y se despacha dentro de su vida útil de 30–45 días. Las tres líneas comparten precio.',
+      notaOrigen:'real',
+      specs:[
+        ['Contenido neto','900 g'],
+        ['Línea','Café Proteico'],
+        ['Proteína','15–18 g / 100 g'],
+        ['Café','Espresso concentrado en la masa'],
+        ['Vida útil','30–45 días'],
+        ['Temporada','Octubre – diciembre'],
+        ['Producción','Contra pedido, nunca contra stock']
+      ]
+    },
+    {
+      id:'paneton-mayorista', cat:'paneton', ilustracion:'paneton',
+      nombre:'Panetón para cafeterías y empresas',
+      subtitulo:'Mayorista y regalo corporativo',
+      precio:null, origen:'supuesto',
+      descripcion:'Presentación para cafeterías, empresas y regalos de fin de año, con empaque de presentación y tarjeta personalizada. Volumen, fecha de entrega y descuento se acuerdan por WhatsApp.',
+      nota:'El catálogo público no exhibe el precio mayorista de campaña. Se cotiza según volumen y fecha de corte de la preventa.',
+      notaOrigen:'supuesto',
+      specs:[
+        ['Formato','Mínimo por cotizar'],
+        ['Presentación','Empaque de regalo y tarjeta'],
+        ['Canal','B2B · cafeterías y empresas'],
+        ['Precio','Por cotizar']
+      ]
+    }
+  ]
+};
+
+/* ==================================================================
+   ESTADO
+================================================================== */
+var CLAVE = 'catalogo-chakra-v1';
+var D = null;          // datos vivos
+var ORIGINAL = null;   // copia de lo semilla (para badge ✏️)
+var PEDIDO = [];       // [{id, cant}]
+var FORM = { nombre:'', entrega:'Delivery', direccion:'' };
+var HISTORIAL = [];
+var EDIT = false;
+var VISTA = { tipo:'portada', cat:null, id:null, cant:1 };
+
+/* ==================================================================
+   UTILIDADES — declaradas ANTES de cualquier uso en tiempo de ejecución
+================================================================== */
+function clonar(o){ return JSON.parse(JSON.stringify(o)); }
+function esc(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+function nl(s){ return esc(s).replace(/\n/g,'<br>'); }
+function soles(n){
+  if(n===null||n===undefined||n===''||isNaN(n)) return '—';
+  var s = Number(n).toFixed(2).split('.');
+  return 'S/ ' + s[0].replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ',' + s[1];
+}
+function parseNum(v){
+  if(typeof v === 'number') return v;
+  var s = String(v==null?'':v).replace(/[^\d,.\-]/g,'').trim();
+  if(s==='') return null;
+  s = s.replace(/\.(?=\d{3}\b)/g,'').replace(',','.');
+  var n = parseFloat(s);
+  return isNaN(n) ? null : n;
+}
+function obtener(ruta){
+  var p = String(ruta).split('.'), o = D;
+  for(var i=0;i<p.length;i++){ if(o==null) return null; o = o[p[i]]; }
+  return o;
+}
+function asignar(ruta, val){
+  var p = String(ruta).split('.'), ult = p.pop(), o = D;
+  for(var i=0;i<p.length;i++){ if(o[p[i]]==null) o[p[i]] = {}; o = o[p[i]]; }
+  o[ult] = val;
+}
+function obtenerOriginal(ruta){
+  var p = String(ruta).split('.'), o = ORIGINAL;
+  for(var i=0;i<p.length;i++){ if(o==null) return null; o = o[p[i]]; }
+  return o;
+}
+function esModificado(ruta){
+  var a = JSON.stringify(obtener(ruta)), b = JSON.stringify(obtenerOriginal(ruta));
+  return a !== b;
+}
+function contarModificados(){
+  var n = 0;
+  function caminar(obj, base){
+    for(var k in obj){
+      if(!Object.prototype.hasOwnProperty.call(obj,k)) continue;
+      var ruta = base ? base+'.'+k : k;
+      if(obj[k] && typeof obj[k]==='object' && !Array.isArray(obj[k])) caminar(obj[k], ruta);
+      else if(JSON.stringify(obj[k]) !== JSON.stringify(obtenerOriginal(ruta))) n++;
+    }
+  }
+  caminar(D, '');
+  return n;
+}
+function $(sel, ctx){ return (ctx||document).querySelector(sel); }
+function $$(sel, ctx){ return Array.prototype.slice.call((ctx||document).querySelectorAll(sel)); }
+function porId(id){
+  for(var i=0;i<D.productos.length;i++) if(D.productos[i].id===id) return D.productos[i];
+  return null;
+}
+function catPorId(id){
+  for(var i=0;i<D.categorias.length;i++) if(D.categorias[i].id===id) return D.categorias[i];
+  return D.categorias[0];
+}
+function productosDe(cat){
+  return D.productos.filter(function(p){ return p.cat===cat; });
+}
+function acentoDe(cat){
+  var c = catPorId(cat);
+  if(c && c.acento==='oro') return {a:'#d99400', b:'#f5c542'};
+  return {a:'#1f4d3f', b:'#2f7a62'};
+}
+function aplicarAcento(cat){
+  var t = acentoDe(cat);
+  document.documentElement.style.setProperty('--acento', t.a);
+  document.documentElement.style.setProperty('--acento-2', t.b);
+}
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('visible');
+  clearTimeout(t._h); t._h = setTimeout(function(){ t.classList.remove('visible'); }, 2400);
+}
+
+/* ==================================================================
+   PERSISTENCIA (localStorage puede fallar dentro de WhatsApp)
+================================================================== */
+function guardar(){
+  try{
+    localStorage.setItem(CLAVE, JSON.stringify({ d:D, pedido:PEDIDO, form:FORM }));
+  }catch(e){ /* la sesión sigue en memoria */ }
+}
+function cargar(){
+  try{
+    var raw = localStorage.getItem(CLAVE);
+    if(!raw) return false;
+    var o = JSON.parse(raw);
+    if(!o || !o.d || !o.d.productos) return false;
+    D = o.d;
+    PEDIDO = Array.isArray(o.pedido) ? o.pedido : [];
+    FORM = o.form || FORM;
+    // limpiar pedidos de productos que ya no existen
+    PEDIDO = PEDIDO.filter(function(it){ return porId(it.id); });
+    return true;
+  }catch(e){ return false; }
+}
+function historial(){
+  HISTORIAL.push(JSON.stringify({d:D, pedido:PEDIDO, form:FORM}));
+  if(HISTORIAL.length>40) HISTORIAL.shift();
+}
+function deshacer(){
+  if(!HISTORIAL.length){ toast('Nada que deshacer'); return; }
+  var s = JSON.parse(HISTORIAL.pop());
+  D = s.d; PEDIDO = s.pedido; FORM = s.form;
+  guardar(); renderTodo(); toast('Cambio deshecho ↩');
+}
+
+/* ==================================================================
+   QR — implementación propia, sin librerías.
+   Modo byte · nivel de corrección M · versiones 1–10 · SVG en línea.
+================================================================== */
+// ### QR-BEGIN ###
+var QR_EC_M = {
+  1:{data:16, bloques:[[1,16,10]]},
+  2:{data:28, bloques:[[1,28,16]]},
+  3:{data:44, bloques:[[1,44,26]]},
+  4:{data:64, bloques:[[2,32,18]]},
+  5:{data:86, bloques:[[2,43,24]]},
+  6:{data:108, bloques:[[4,27,16]]},
+  7:{data:124, bloques:[[4,31,18]]},
+  8:{data:154, bloques:[[2,38,22],[2,39,22]]},
+  9:{data:182, bloques:[[3,36,22],[2,37,22]]},
+  10:{data:216, bloques:[[4,43,26],[1,44,26]]}
+};
+var QR_ALIGN = {1:[],2:[6,18],3:[6,22],4:[6,26],5:[6,30],6:[6,34],
+                7:[6,22,38],8:[6,24,42],9:[6,26,46],10:[6,28,50]};
+
+var GF_EXP = new Uint8Array(512), GF_LOG = new Uint8Array(256);
+(function(){
+  var x = 1;
+  for(var i=0;i<255;i++){ GF_EXP[i]=x; GF_LOG[x]=i; x<<=1; if(x & 0x100) x ^= 0x11d; }
+  for(var i=255;i<512;i++) GF_EXP[i] = GF_EXP[i-255];
+})();
+function gfMul(a,b){ return (a===0||b===0) ? 0 : GF_EXP[GF_LOG[a] + GF_LOG[b]]; }
+
+function qrGenPoly(grado){
+  var poly = [1];
+  for(var i=0;i<grado;i++){
+    var next = new Array(poly.length+1);
+    for(var k=0;k<next.length;k++) next[k]=0;
+    for(var j=0;j<poly.length;j++){
+      next[j]   ^= poly[j];
+      next[j+1] ^= gfMul(poly[j], GF_EXP[i]);
+    }
+    poly = next;
+  }
+  return poly;
+}
+function qrRS(datos, ecLen){
+  var gen = qrGenPoly(ecLen);
+  var res = datos.slice();
+  for(var i=0;i<ecLen;i++) res.push(0);
+  for(var i=0;i<datos.length;i++){
+    var f = res[i];
+    if(f===0) continue;
+    for(var j=0;j<gen.length;j++) res[i+j] ^= gfMul(gen[j], f);
+  }
+  return res.slice(datos.length);
+}
+function utf8Bytes(str){
+  if(typeof TextEncoder !== 'undefined'){
+    var arr = new TextEncoder().encode(str), out = [];
+    for(var i=0;i<arr.length;i++) out.push(arr[i]);
+    return out;
+  }
+  var out2 = [], enc = encodeURIComponent(str);
+  for(var i2=0;i2<enc.length;i2++){
+    if(enc.charAt(i2)==='%'){ out2.push(parseInt(enc.substr(i2+1,2),16)); i2+=2; }
+    else out2.push(enc.charCodeAt(i2));
+  }
+  return out2;
+}
+function qrFormatBits(mascara){
+  var data = (0 << 3) | mascara;      // nivel M = 00
+  var rem = data;
+  for(var i=0;i<10;i++) rem = (rem << 1) ^ ((rem >>> 9) * 0x537);
+  return ((data << 10) | rem) ^ 0x5412;
+}
+function qrVersionBits(v){
+  var rem = v;
+  for(var i=0;i<12;i++) rem = (rem << 1) ^ ((rem >>> 11) * 0x1F25);
+  return (v << 12) | rem;
+}
+function qrPenaliza(m){
+  var n = m.length, p = 0, i, j, k, t;
+  // regla 1: rachas de 5 o más
+  for(k=0;k<2;k++){
+    for(i=0;i<n;i++){
+      var run = 1;
+      for(j=1;j<n;j++){
+        var cur  = k===0 ? m[i][j]   : m[j][i];
+        var prev = k===0 ? m[i][j-1] : m[j-1][i];
+        if(cur===prev) run++;
+        else { if(run>=5) p += 3 + (run-5); run = 1; }
+      }
+      if(run>=5) p += 3 + (run-5);
+    }
+  }
+  // regla 2: bloques 2×2
+  for(i=0;i<n-1;i++) for(j=0;j<n-1;j++){
+    var c = m[i][j];
+    if(c===m[i][j+1] && c===m[i+1][j] && c===m[i+1][j+1]) p += 3;
+  }
+  // regla 3: patrón tipo localizador
+  var p1 = [1,0,1,1,1,0,1,0,0,0,0];
+  var p2 = [0,0,0,0,1,0,1,1,1,0,1];
+  for(k=0;k<2;k++){
+    for(i=0;i<n;i++){
+      for(j=0;j<=n-11;j++){
+        var ok1 = true, ok2 = true;
+        for(t=0;t<11;t++){
+          var v = k===0 ? m[i][j+t] : m[j+t][i];
+          if((v?1:0) !== p1[t]) ok1 = false;
+          if((v?1:0) !== p2[t]) ok2 = false;
+        }
+        if(ok1) p += 40;
+        if(ok2) p += 40;
+      }
+    }
+  }
+  // regla 4: proporción de módulos oscuros
+  var dark = 0;
+  for(i=0;i<n;i++) for(j=0;j<n;j++) if(m[i][j]) dark++;
+  var pct = dark * 100 / (n*n);
+  p += Math.floor(Math.abs(pct - 50) / 5) * 10;
+  return p;
+}
+function qrMatriz(texto){
+  var bytes = utf8Bytes(texto);
+  var version = 0, meta = null, v;
+  for(v=1;v<=10;v++){
+    var cc = v<10 ? 8 : 16;
+    if(4 + cc + bytes.length*8 <= QR_EC_M[v].data*8){ version = v; meta = QR_EC_M[v]; break; }
+  }
+  if(!version) throw new Error('La URL es demasiado larga para el QR (máximo '+QR_EC_M[10].data+' bytes).');
+
+  // --- flujo de bits ---
+  var bits = [];
+  function push(val, len){ for(var i=len-1;i>=0;i--) bits.push((val >>> i) & 1); }
+  push(4,4);                                   // modo byte
+  push(bytes.length, version<10 ? 8 : 16);
+  for(var bi=0; bi<bytes.length; bi++) push(bytes[bi], 8);
+  var capBits = meta.data * 8;
+  push(0, Math.min(4, capBits - bits.length)); // terminador
+  while(bits.length % 8 !== 0) bits.push(0);
+  var pads = [0xEC, 0x11], pi = 0;
+  while(bits.length < capBits){ push(pads[pi++ % 2], 8); }
+
+  var codewords = [];
+  for(var i2=0;i2<bits.length;i2+=8){
+    var byte = 0;
+    for(var j2=0;j2<8;j2++) byte = (byte << 1) | bits[i2+j2];
+    codewords.push(byte);
+  }
+
+  // --- bloques + corrección de errores ---
+  var bloques = [], off = 0, ecLen = 0, maxData = 0;
+  meta.bloques.forEach(function(g){
+    var count = g[0], dlen = g[1]; ecLen = g[2];
+    for(var b=0;b<count;b++){
+      var d = codewords.slice(off, off+dlen); off += dlen;
+      bloques.push({ d:d, e:qrRS(d, dlen ? ecLen : ecLen), ec:ecLen });
+      if(d.length > maxData) maxData = d.length;
+    }
+  });
+  var final = [];
+  for(var i3=0;i3<maxData;i3++)
+    for(var b3=0;b3<bloques.length;b3++)
+      if(i3 < bloques[b3].d.length) final.push(bloques[b3].d[i3]);
+  var maxEc = 0;
+  bloques.forEach(function(b){ if(b.ec > maxEc) maxEc = b.ec; });
+  for(var i4=0;i4<maxEc;i4++)
+    for(var b4=0;b4<bloques.length;b4++)
+      if(i4 < bloques[b4].e.length) final.push(bloques[b4].e[i4]);
+
+  // --- matriz base ---
+  var size = version*4 + 17;
+  var mods = [], fn = [], y, x;
+  for(y=0;y<size;y++){
+    mods.push(new Array(size)); fn.push(new Array(size));
+    for(x=0;x<size;x++){ mods[y][x] = false; fn[y][x] = false; }
+  }
+  function setF(cx, cy, dark){
+    if(cx<0||cy<0||cx>=size||cy>=size) return;
+    mods[cy][cx] = dark; fn[cy][cx] = true;
+  }
+  function finder(cx, cy){
+    for(var dy=-4;dy<=4;dy++) for(var dx=-4;dx<=4;dx++){
+      var d = Math.max(Math.abs(dx), Math.abs(dy));
+      setF(cx+dx, cy+dy, d!==2 && d!==4);
+    }
+  }
+  finder(3,3); finder(size-4,3); finder(3,size-4);
+  for(var t=8; t<size-8; t++){ setF(t,6,(t%2)===0); setF(6,t,(t%2)===0); }
+  var al = QR_ALIGN[version];
+  for(var ai=0; ai<al.length; ai++){
+    for(var aj=0; aj<al.length; aj++){
+      var r = al[ai], c = al[aj];
+      var p0 = al[0], pl = al[al.length-1];
+      if((r===p0&&c===p0) || (r===p0&&c===pl) || (r===pl&&c===p0)) continue;
+      for(var dy2=-2;dy2<=2;dy2++) for(var dx2=-2;dx2<=2;dx2++){
+        var dd = Math.max(Math.abs(dx2), Math.abs(dy2));
+        setF(c+dx2, r+dy2, dd!==1);
+      }
+    }
+  }
+  // reserva de formato
+  function pintarFormato(m, mascara){
+    var bitsF = qrFormatBits(mascara);
+    function g(i){ return ((bitsF >>> i) & 1) === 1; }
+    function put(px,py,val){ m[py][px] = val; fn[py][px] = true; }
+    for(var i=0;i<=5;i++) put(8,i,g(i));
+    put(8,7,g(6)); put(8,8,g(7)); put(7,8,g(8));
+    for(var i=9;i<15;i++) put(14-i,8,g(i));
+    for(var i=0;i<8;i++) put(size-1-i,8,g(i));
+    for(var i=8;i<15;i++) put(8,size-15+i,g(i));
+    put(8,size-8,true); // módulo oscuro
+  }
+  pintarFormato(mods, 0);
+  // información de versión (v ≥ 7)
+  if(version >= 7){
+    var vb = qrVersionBits(version);
+    for(var i5=0;i5<18;i5++){
+      var bit = ((vb >>> i5) & 1) === 1;
+      var a = size-11+(i5%3), bb = Math.floor(i5/3);
+      mods[bb][a] = bit; fn[bb][a] = true;
+      mods[a][bb] = bit; fn[a][bb] = true;
+    }
+  }
+
+  // --- colocación de datos (zigzag) ---
+  var idx = 0, totalBits = final.length * 8;
+  for(var right = size-1; right >= 1; right -= 2){
+    if(right === 6) right = 5;
+    for(var vert = 0; vert < size; vert++){
+      for(var jj=0; jj<2; jj++){
+        var xx = right - jj;
+        var ascend = ((right + 1) & 2) === 0;
+        var yy = ascend ? size-1-vert : vert;
+        if(!fn[yy][xx] && idx < totalBits){
+          mods[yy][xx] = ((final[idx >>> 3] >>> (7 - (idx & 7))) & 1) === 1;
+          idx++;
+        }
+      }
+    }
+  }
+
+  // --- selección de máscara ---
+  function aplicarMask(m, mask){
+    for(var yy=0;yy<size;yy++) for(var xx=0;xx<size;xx++){
+      if(fn[yy][xx]) continue;
+      var inv = false;
+      switch(mask){
+        case 0: inv = ((xx+yy) % 2) === 0; break;
+        case 1: inv = (yy % 2) === 0; break;
+        case 2: inv = (xx % 3) === 0; break;
+        case 3: inv = ((xx+yy) % 3) === 0; break;
+        case 4: inv = (Math.floor(yy/2) + Math.floor(xx/3)) % 2 === 0; break;
+        case 5: inv = ((xx*yy) % 2 + (xx*yy) % 3) === 0; break;
+        case 6: inv = (((xx*yy) % 2 + (xx*yy) % 3) % 2) === 0; break;
+        case 7: inv = (((xx*yy) % 3 + (xx+yy) % 2) % 2) === 0; break;
+      }
+      if(inv) m[yy][xx] = !m[yy][xx];
+    }
+  }
+  var mejor = null, mejorPunt = Infinity;
+  for(var mk=0; mk<8; mk++){
+    var cand = mods.map(function(fila){ return fila.slice(); });
+    aplicarMask(cand, mk);
+    pintarFormato(cand, mk);
+    var punt = qrPenaliza(cand);
+    if(punt < mejorPunt){ mejorPunt = punt; mejor = cand; }
+  }
+  return mejor;
+}
+function qrSVG(texto, px){
+  var m;
+  try{ m = qrMatriz(texto); }
+  catch(e){ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><rect width="10" height="10" fill="#fdecea"/><text x="5" y="6" font-size="2" text-anchor="middle" fill="#b3261e">!</text></svg>'; }
+  var n = m.length, q = 4, total = n + q*2, d = '';
+  for(var y=0;y<n;y++){
+    for(var x=0;x<n;x++){
+      if(m[y][x]) d += 'M' + (x+q) + ' ' + (y+q) + 'h1v1h-1z';
+    }
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+total+' '+total+'" '+
+         'width="'+px+'" height="'+px+'" shape-rendering="crispEdges" role="img" '+
+         'aria-label="Código QR del catálogo">'+
+         '<rect width="'+total+'" height="'+total+'" fill="#ffffff"/>'+
+         '<path d="'+d+'" fill="#000000"/></svg>';
+}
+// ### QR-END ###
+
+/* ==================================================================
+   ILUSTRACIONES SVG (sin imágenes externas)
+================================================================== */
+function arte(tipo, tam){
+  tam = tam || 120;
+  var cab = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="'+tam+'" height="'+tam+'" role="img" aria-hidden="true">';
+  if(tipo==='paneton'){
+    return cab +
+      '<ellipse cx="60" cy="104" rx="42" ry="8" fill="rgba(0,0,0,.18)"/>'+
+      '<path d="M26 60c0-20 15-34 34-34s34 14 34 34v10H26z" fill="#e8b06a"/>'+
+      '<path d="M26 64h68v14a6 6 0 01-6 6H32a6 6 0 01-6-6z" fill="#c98a4a"/>'+
+      '<rect x="30" y="84" width="60" height="14" rx="4" fill="#8c5a2b"/>'+
+      '<path d="M30 84h60v4H30z" fill="#6f451f" opacity=".5"/>'+
+      '<circle cx="45" cy="52" r="5" fill="#7a3b1f"/>'+
+      '<circle cx="63" cy="44" r="4.5" fill="#5c2f18"/>'+
+      '<circle cx="77" cy="57" r="5" fill="#7a3b1f"/>'+
+      '<circle cx="57" cy="63" r="4" fill="#5c2f18"/>'+
+      '<circle cx="36" cy="66" r="3.5" fill="#9b4f26"/>'+
+      '<circle cx="88" cy="68" r="3.5" fill="#9b4f26"/>'+
+      '<path d="M40 34c4-6 12-9 20-9" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".55"/>'+
+      '</svg>';
+  }
+  // café (por defecto)
+  return cab +
+    '<ellipse cx="60" cy="106" rx="38" ry="7" fill="rgba(0,0,0,.18)"/>'+
+    '<path d="M34 34h52l6 62a8 8 0 01-8 9H36a8 8 0 01-8-9z" fill="#2f4034"/>'+
+    '<path d="M34 34h52l2 16H32z" fill="#3d5544"/>'+
+    '<rect x="40" y="16" width="40" height="20" rx="5" fill="#1f2b23"/>'+
+    '<rect x="44" y="58" width="32" height="34" rx="4" fill="#f6f2ec"/>'+
+    '<ellipse cx="60" cy="70" rx="11" ry="8" fill="#8c5a2b" transform="rotate(-20 60 70)"/>'+
+    '<path d="M53 66c4 3 10 3 14 0" stroke="#4a2f1a" stroke-width="2.2" fill="none" stroke-linecap="round"/>'+
+    '<rect x="48" y="84" width="24" height="4" rx="2" fill="#c9b8a4"/>'+
+    '<path d="M92 44c5 0 9 4 9 9s-4 9-9 9" stroke="#f2c14e" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+    '</svg>';
+}
+
+/* ==================================================================
+   BADGES
+================================================================== */
+function badgeOrigen(ruta, origen){
+  if(origen==='supuesto') return '<span class="badge supuesto" data-ruta="'+esc(ruta)+'" title="Estimación por validar">🔶 supuesto</span>';
+  return '<span class="badge real" data-ruta="'+esc(ruta)+'" title="Dato verificado">real</span>';
+}
+function badgeRuta(ruta, origen){
+  var b = badgeOrigen(ruta, origen);
+  if(EDIT && esModificado(ruta)) b += ' <span class="badge modificado" data-ruta="'+esc(ruta)+'">✏️ modificado</span>';
+  return b;
+}
+
+/* ==================================================================
+   CÁLCULOS DEL PEDIDO
+================================================================== */
+function totalPedido(){
+  var t = 0;
+  PEDIDO.forEach(function(it){
+    var p = porId(it.id);
+    if(p && typeof p.precio === 'number') t += p.precio * it.cant;
+  });
+  return t;
+}
+function unidadesPedido(){
+  var n = 0; PEDIDO.forEach(function(it){ n += it.cant; }); return n;
+}
+function hayPorCotizar(){
+  return PEDIDO.some(function(it){ var p = porId(it.id); return p && p.precio==null; });
+}
+function agregar(id, cant){
+  historial();
+  cant = cant || 1;
+  var ex = null;
+  PEDIDO.forEach(function(it){ if(it.id===id) ex = it; });
+  if(ex) ex.cant += cant; else PEDIDO.push({id:id, cant:cant});
+  guardar(); actualizarBarra();
+}
+function quitar(id){
+  historial();
+  PEDIDO = PEDIDO.filter(function(it){ return it.id !== id; });
+  guardar(); actualizarBarra();
+}
+function setCant(id, cant){
+  historial();
+  PEDIDO = PEDIDO.map(function(it){
+    if(it.id===id) it.cant = Math.max(1, cant);
+    return it;
+  });
+  guardar(); actualizarBarra();
+}
+
+function mensajePedido(){
+  var L = [];
+  L.push('Pedido – Catálogo ' + D.config.marca);
+  L.push('-----------------------------');
+  PEDIDO.forEach(function(it){
+    var p = porId(it.id); if(!p) return;
+    var sub = (typeof p.precio === 'number') ? soles(p.precio * it.cant) : 'por cotizar';
+    L.push(it.cant + ' × ' + p.nombre + ' = ' + sub);
+  });
+  L.push('-----------------------------');
+  var t = totalPedido();
+  L.push((hayPorCotizar() ? 'Total (parcial) = ' : 'Total = ') + soles(t));
+  if(hayPorCotizar()) L.push('Hay ítems por cotizar: el total final lo confirmamos por chat.');
+  L.push('');
+  L.push('Nombre: ' + (FORM.nombre || ''));
+  L.push('Entrega: ' + (FORM.entrega || ''));
+  L.push('Dirección: ' + (FORM.direccion || ''));
+  L.push('');
+  L.push('Enviado desde el catálogo QR 📲');
+  return L.join('\n');
+}
+function mensajeCotizacion(p){
+  return 'Hola, quiero cotizar: ' + p.nombre + ' (' + D.config.marca + ').\n' +
+         'Vi el catálogo en ' + D.config.url + '\n¿Me pasan precio y tiempos?';
+}
+function abrirWhatsApp(texto){
+  var num = String(D.config.numero || '').replace(/\D/g,'');
+  var url = 'https://wa.me/' + num + '?text=' + encodeURIComponent(texto);
+  var w = window.open(url, '_blank');
+  if(!w){
+    toast('No se pudo abrir WhatsApp. Usa “Copiar pedido”.');
+    return false;
+  }
+  return true;
+}
+function copiar(texto, okMsg){
+  function ok(){ toast(okMsg || 'Copiado al portapapeles ✅'); }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(texto).then(ok, function(){ fallback(); });
+  } else fallback();
+  function fallback(){
+    try{
+      var ta = document.createElement('textarea');
+      ta.value = texto; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta); ok();
+    }catch(e){ cajaError('No se pudo copiar el texto.', e.message); }
+  }
+}
+
+/* ==================================================================
+   RENDER — componentes
+================================================================== */
+function filaProducto(p, idx, cat){
+  var rutaBase = 'productos.' + idx;
+  var tienePrecio = typeof p.precio === 'number';
+  var precioHTML = tienePrecio
+    ? '<span class="val" data-campo="'+rutaBase+'.precio" data-tipo="num">'+soles(p.precio)+'</span>'
+    : '<span class="val">Por cotizar</span>';
+  var enPedido = PEDIDO.some(function(it){ return it.id===p.id; });
+
+  return ''+
+  '<article class="fila" data-id="'+esc(p.id)+'">'+
+    '<div class="mini" aria-hidden="true">'+arte(p.ilustracion, 54)+'</div>'+
+    '<button class="info" type="button" data-abrir="'+esc(p.id)+'" style="background:none;border:0;padding:0">'+
+      '<h3 data-campo="'+rutaBase+'.nombre" data-tipo="txt">'+esc(p.nombre)+'</h3>'+
+      '<div class="dato" data-campo="'+rutaBase+'.subtitulo" data-tipo="txt">'+esc(p.subtitulo)+'</div>'+
+      '<div class="precio'+(tienePrecio?'':' nulo')+'">'+precioHTML+' '+badgeRuta(rutaBase+'.precio', p.origen)+'</div>'+
+    '</button>'+
+    '<div class="acciones">'+
+      '<div class="orden">'+
+        (idx>0 ? '<button type="button" data-orden="arriba" data-i="'+idx+'" aria-label="Subir">▲</button>' : '')+
+        (idx < D.productos.length-1 ? '<button type="button" data-orden="abajo" data-i="'+idx+'" aria-label="Bajar">▼</button>' : '')+
+      '</div>'+
+      (tienePrecio
+        ? '<button class="btn-add'+(enPedido?' hecho':'')+'" type="button" data-add="'+esc(p.id)+'" aria-label="Agregar '+esc(p.nombre)+'">'+
+            (enPedido? '✓ '+PEDIDO.filter(function(i){return i.id===p.id;})[0].cant : '+ Agregar')+'</button>'
+        : '<button class="btn-add" type="button" data-cotizar="'+esc(p.id)+'" style="background:#5a534b">💬 Cotizar</button>')+
+    '</div>'+
+  '</article>';
+}
+
+function renderPortada(){
+  aplicarAcento('cafe');
+  var html = '';
+  D.categorias.forEach(function(c, ci){
+    var ps = productosDe(c.id);
+    var desde = null;
+    ps.forEach(function(p){ if(typeof p.precio==='number' && (desde===null || p.precio<desde)) desde = p.precio; });
+    html += ''+
+    '<button class="tarjeta-cat" type="button" data-cat="'+esc(c.id)+'">'+
+      '<div class="banda">'+
+        '<div class="lema" data-campo="categorias.'+ci+'.lema" data-tipo="txt">'+esc(c.lema)+'</div>'+
+        '<h3 data-campo="categorias.'+ci+'.nombre" data-tipo="txt">'+esc(c.nombre)+'</h3>'+
+      '</div>'+
+      '<div class="pie">'+
+        '<span class="cuenta">'+ps.length+' productos'+(desde!=null?' · desde '+soles(desde):'')+'</span>'+
+        '<span class="ir">Ver →</span>'+
+      '</div>'+
+      '<div class="mini" aria-hidden="true">'+arte(c.id==='paneton'?'paneton':'cafe', 56)+'</div>'+
+    '</button>';
+  });
+  $('#cats-portada').innerHTML = html;
+  $('#cuenta-total').textContent = D.productos.length + ' productos en total';
+  $('#url-portada').textContent = D.config.url;
+  $('#pie-url').textContent = D.config.url;
+  pintarQRs();
+}
+
+function renderCategoria(cat, conSkeleton){
+  var c = catPorId(cat);
+  aplicarAcento(cat);
+  var ps = productosDe(cat);
+  var cab = ''+
+  '<div class="cat-cab">'+
+    '<div class="txt">'+
+      '<div class="lema" data-campo="categorias.'+D.categorias.indexOf(c)+'.lema" data-tipo="txt">'+esc(c.lema)+'</div>'+
+      '<h1 data-campo="categorias.'+D.categorias.indexOf(c)+'.nombre" data-tipo="txt">'+esc(c.nombre)+'</h1>'+
+      '<div class="cuenta">'+ps.length+' productos · pedido por WhatsApp</div>'+
+    '</div>'+
+    '<div class="arte">'+arte(c.id==='paneton'?'paneton':'cafe', 88)+'</div>'+
+  '</div>'+
+  '<div class="edit-add"><button type="button" data-nuevo="'+esc(cat)+'">＋ Añadir producto</button></div>'+
+  '<div class="lista" id="lista-cat"></div>';
+
+  var el = $('#v-categoria');
+  el.innerHTML = cab;
+
+  function pintar(){
+    var cont = $('#lista-cat');
+    if(!cont) return;
+    if(!ps.length){
+      cont.innerHTML = '<div class="vacio"><div class="grande">🗂️</div><p>Todavía no hay productos en esta categoría.</p></div>';
+      return;
+    }
+    cont.innerHTML = ps.map(function(p){
+      return filaProducto(p, D.productos.indexOf(p), cat);
+    }).join('');
+    aplicarAcento(cat);
+    // el contenido se inyectó después del esqueleto: re-aplica el modo edición
+    activarModo(EDIT, true);
+  }
+
+  if(conSkeleton){
+    $('#lista-cat').innerHTML = '<div class="sk sk-fila"></div><div class="sk sk-fila"></div><div class="sk sk-fila"></div>';
+    setTimeout(pintar, 170);
+  } else pintar();
+}
+
+function renderFicha(id, conSkeleton){
+  var p = porId(id);
+  if(!p){ ir('#/'); return; }
+  aplicarAcento(p.cat);
+  var idx = D.productos.indexOf(p);
+  var rutaBase = 'productos.' + idx;
+  var tienePrecio = typeof p.precio === 'number';
+
+  var body = ''+
+  '<div class="ficha-arte">'+arte(p.ilustracion, 150)+'</div>'+
+  '<div class="ficha-cuerpo">'+
+    '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px">'+
+      '<span class="badge linea">'+esc(catPorId(p.cat).nombre)+'</span>'+ badgeRuta(rutaBase+'.precio', p.origen)+
+    '</div>'+
+    '<h1 data-campo="'+rutaBase+'.nombre" data-tipo="txt">'+esc(p.nombre)+'</h1>'+
+    '<div class="sub" data-campo="'+rutaBase+'.subtitulo" data-tipo="txt">'+esc(p.subtitulo)+'</div>'+
+    '<div class="ficha-precio">'+
+      (tienePrecio
+        ? '<span class="val" data-campo="'+rutaBase+'.precio" data-tipo="num">'+soles(p.precio)+'</span><span class="unidad">precio unitario · IGV incluido</span>'
+        : '<span class="val nulo">Precio por cotizar</span><span class="unidad">se acuerda por WhatsApp</span>')+
+    '</div>'+
+
+    '<div class="bloque">'+
+      '<h2>Ficha del producto</h2>'+
+      '<div class="specs">'+
+        p.specs.map(function(s, si){
+          return '<div class="par">'+
+            '<span class="k" data-campo="'+rutaBase+'.specs.'+si+'.0" data-tipo="txt">'+esc(s[0])+'</span>'+
+            '<span class="v" data-campo="'+rutaBase+'.specs.'+si+'.1" data-tipo="txt">'+esc(s[1])+'</span>'+
+            '<button class="borrar" type="button" data-del-spec="'+si+'" aria-label="Borrar especificación">✕</button>'+
+          '</div>';
+        }).join('')+
+      '</div>'+
+      '<div class="edit-add"><button type="button" data-add-spec="'+idx+'">＋ Añadir especificación</button></div>'+
+    '</div>'+
+
+    '<div class="bloque">'+
+      '<h2>Descripción</h2>'+
+      '<p class="txt-cuerpo" data-campo="'+rutaBase+'.descripcion" data-tipo="txt">'+nl(p.descripcion)+'</p>'+
+    '</div>'+
+
+    (p.nota ? '<div class="bloque"><div class="nota">'+
+        '<h3>'+ (p.notaOrigen==='real' ? 'Dato verificado' : '🔶 Dato por validar') +'</h3>'+
+        '<div data-campo="'+rutaBase+'.nota" data-tipo="txt">'+nl(p.nota)+'</div>'+
+      '</div></div>' : '')+
+
+    '<div class="cantidad">'+
+      '<span class="lbl">Cantidad</span>'+
+      '<div class="stepper">'+
+        '<button type="button" data-paso="-1" aria-label="Menos">−</button>'+
+        '<input type="number" id="in-cant" min="1" max="999" value="'+VISTA.cant+'" aria-label="Cantidad">'+
+        '<button type="button" data-paso="1" aria-label="Más">+</button>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="edit-ficha">'+
+      '<span style="font-size:12px;font-weight:800;color:#8a5a00">CATEGORÍA</span>'+
+      '<select data-campo="'+rutaBase+'.cat" data-tipo="txt" data-select="1">'+
+        D.categorias.map(function(c){
+          return '<option value="'+esc(c.id)+'"'+(c.id===p.cat?' selected':'')+'>'+esc(c.nombre)+'</option>';
+        }).join('')+
+      '</select>'+
+      '<span style="font-size:12px;font-weight:800;color:#8a5a00">ORIGEN DEL PRECIO</span>'+
+      '<select data-campo="'+rutaBase+'.origen" data-tipo="txt" data-select="1">'+
+        '<option value="real"'+(p.origen==='real'?' selected':'')+'>real</option>'+
+        '<option value="supuesto"'+(p.origen==='supuesto'?' selected':'')+'>supuesto 🔶</option>'+
+      '</select>'+
+      '<button type="button" data-dup="'+idx+'">⧉ Duplicar</button>'+
+      '<button type="button" class="peligro" data-del="'+idx+'">🗑 Eliminar</button>'+
+    '</div>'+
+
+    '<div class="edit-add"><button type="button" data-nuevo="'+esc(p.cat)+'">＋ Añadir producto en esta categoría</button></div>'+
+  '</div>'+
+
+  '<div class="accion-fija">'+
+    (tienePrecio
+      ? '<button class="btn-primario" type="button" data-add-ficha="'+esc(p.id)+'">Agregar al pedido · <span id="ficha-sub">'+soles(p.precio*VISTA.cant)+'</span></button>'
+      : '<button class="btn-primario" type="button" data-cotizar="'+esc(p.id)+'" style="background:#128c4b">💬 Cotizar por WhatsApp</button>')+
+  '</div>';
+
+  var el = $('#v-ficha');
+  if(conSkeleton){
+    el.innerHTML = '<div class="sk sk-hero"></div><div style="padding:16px">'+
+      '<div class="sk sk-linea" style="width:70%;height:26px"></div>'+
+      '<div class="sk sk-linea" style="width:40%"></div>'+
+      '<div class="sk" style="height:180px;margin-top:20px"></div></div>';
+    setTimeout(function(){
+      el.innerHTML = body;
+      // el contenido llega tras el esqueleto: re-aplica el modo edición
+      activarModo(EDIT, true);
+    }, 170);
+  } else el.innerHTML = body;
+}
+
+function renderPedido(){
+  aplicarAcento('cafe');
+  var el = $('#v-pedido');
+  if(!PEDIDO.length){
+    el.innerHTML = '<div class="vacio"><div class="grande">🛒</div>'+
+      '<p><b>Tu pedido está vacío</b></p><p>Agrega productos desde el catálogo.</p>'+
+      '<div style="margin-top:20px"><button class="btn-secundario" type="button" data-cat="cafe">Ver café ☕</button></div></div>';
+    return;
+  }
+  var filas = PEDIDO.map(function(it){
+    var p = porId(it.id); if(!p) return '';
+    var tienePrecio = typeof p.precio === 'number';
+    return '<div class="res-fila" data-id="'+esc(p.id)+'">'+
+      '<div class="stepper">'+
+        '<button type="button" data-res-paso="-1" aria-label="Menos">−</button>'+
+        '<input type="number" min="1" max="999" value="'+it.cant+'" data-res-cant aria-label="Cantidad de '+esc(p.nombre)+'">'+
+        '<button type="button" data-res-paso="1" aria-label="Más">+</button>'+
+      '</div>'+
+      '<div class="n"><h3>'+esc(p.nombre)+'</h3>'+
+        '<div class="u">'+(tienePrecio? soles(p.precio)+' c/u' : 'Por cotizar')+'</div></div>'+
+      '<div class="sub">'+(tienePrecio? soles(p.precio*it.cant) : '—')+'</div>'+
+      '<button class="borrar" type="button" data-res-del aria-label="Quitar">✕</button>'+
+    '</div>';
+  }).join('');
+
+  el.innerHTML = ''+
+  '<div class="pedido-res">'+
+    '<div style="margin-bottom:8px"><span class="badge linea">'+unidadesPedido()+' unidades</span> '+
+      (hayPorCotizar()?'<span class="badge supuesto">🔶 hay ítems por cotizar</span>':'')+'</div>'+
+    filas+
+    '<div class="total-fila"><span class="t">Total</span><span class="v">'+soles(totalPedido())+'</span></div>'+
+
+    '<div class="campo"><label for="f-nombre">Nombre</label>'+
+      '<input type="text" id="f-nombre" data-form="nombre" value="'+esc(FORM.nombre)+'" placeholder="Tu nombre"></div>'+
+
+    '<div class="campo"><label>Tipo de entrega</label><div class="radios">'+
+      ['Delivery','Recojo en tienda','Coordinar'].map(function(o){
+        return '<label><input type="radio" name="entrega" value="'+o+'" data-form="entrega"'+(FORM.entrega===o?' checked':'')+'>'+o+'</label>';
+      }).join('')+
+    '</div></div>'+
+
+    '<div class="campo"><label for="f-dir">Dirección o referencia</label>'+
+      '<textarea id="f-dir" data-form="direccion" placeholder="Distrito, dirección y referencia">'+esc(FORM.direccion)+'</textarea></div>'+
+
+    '<button class="btn-primario btn-wa" type="button" id="btn-wa" style="width:100%">'+
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5s.8 1.9.8 2c.1.1.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1.9 2 1.2 2.3 1.4.3.1.5.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.4.7 1.6.8.2.1.4.2.4.3.1.1.1.6-.1 1.2z"/></svg>'+
+      'Enviar pedido por WhatsApp</button>'+
+    '<p class="pista">'+esc(D.config.whatsappTexto)+'</p>'+
+    '<div style="display:flex;gap:8px;margin-top:12px">'+
+      '<button class="btn-secundario" type="button" id="btn-copiar" style="flex:1">📋 Copiar pedido</button>'+
+      '<button class="btn-secundario" type="button" data-cat="cafe" style="flex:1">＋ Seguir comprando</button>'+
+    '</div>'+
+    '<p class="pista" style="margin-top:16px;color:var(--neutro-400)">Zona de entrega: '+esc(D.config.zona)+'</p>'+
+  '</div>';
+}
+
+/* ==================================================================
+   QR EN PANTALLA
+================================================================== */
+function pintarQRs(){
+  var url = D.config.url || '';
+  try{
+    var a = document.getElementById('qr-portada');
+    if(a) a.innerHTML = qrSVG(url, 96);
+    var b = document.getElementById('qr-pie');
+    if(b) b.innerHTML = qrSVG(url, 68);
+    var c = document.getElementById('qr-cartel');
+    if(c) c.innerHTML = qrSVG(url, 300);
+  }catch(e){ cajaError('No se pudo generar el QR.', e.message); }
+  var cu = document.getElementById('cartel-url');
+  if(cu) cu.textContent = url;
+  var cm = document.getElementById('cartel-marca');
+  if(cm) cm.textContent = D.config.marca;
+}
+
+/* ==================================================================
+   BARRA INFERIOR / CONTADORES
+================================================================== */
+function actualizarBarra(){
+  var n = unidadesPedido();
+  var barra = $('#barra-pedido');
+  $('#barra-n').textContent = n === 1 ? '1 producto' : n + ' productos';
+  $('#barra-total').textContent = soles(totalPedido()) + (hayPorCotizar() ? ' *' : '');
+  barra.classList.toggle('visible', n > 0);
+  var car = $('#btn-carrito');
+  $('#n-carrito').textContent = n;
+  car.classList.toggle('vacio', n === 0);
+  var cont = $('#cont-mod');
+  if(cont){
+    var m = contarModificados();
+    cont.textContent = m === 1 ? '1 campo modificado' : m + ' campos modificados';
+  }
+}
+
+/* ==================================================================
+   ROUTER
+================================================================== */
+function ir(hash){ location.hash = hash; }
+
+function navegar(){
+  var h = (location.hash || '#/').replace(/^#/, '');
+  var marco = $('#marco');
+  var vistas = $$('.vista');
+  function activar(id){
+    vistas.forEach(function(v){ v.classList.toggle('activa', v.id === id); });
+    marco.setAttribute('data-vista', id.replace('v-',''));
+    $('#vistas').scrollTop = 0;
+  }
+
+  if(h === 'cartel'){
+    $('#cartel').classList.add('abierto');
+    pintarQRs();
+    return;
+  }
+  $('#cartel').classList.remove('abierto');
+
+  if(h.indexOf('/c/') === 0){
+    var cat = h.slice(3);
+    VISTA = {tipo:'categoria', cat:cat, id:null, cant:1};
+    aplicarAcento(cat);
+    $('#titulo-app').innerHTML = esc(catPorId(cat).nombre) + '<small>Categoría</small>';
+    activar('v-categoria');
+    renderCategoria(cat, true);
+  } else if(h.indexOf('/p/') === 0){
+    var id = h.slice(3);
+    var p = porId(id);
+    if(!p){ ir('#/'); return; }
+    VISTA = {tipo:'ficha', cat:p.cat, id:id, cant:1};
+    aplicarAcento(p.cat);
+    $('#titulo-app').innerHTML = esc(p.nombre) + '<small>Ficha de producto</small>';
+    activar('v-ficha');
+    renderFicha(id, true);
+  } else if(h === '/pedido'){
+    VISTA = {tipo:'pedido', cat:null, id:null, cant:1};
+    aplicarAcento('cafe');
+    $('#titulo-app').innerHTML = 'Tu pedido<small>' + D.config.marca + '</small>';
+    activar('v-pedido');
+    renderPedido();
+  } else {
+    VISTA = {tipo:'portada', cat:null, id:null, cant:1};
+    aplicarAcento('cafe');
+    $('#titulo-app').innerHTML = esc(D.config.marcaCorta || 'Chakra') + '<small>Catálogo virtual</small>';
+    activar('v-portada');
+    renderPortada();
+  }
+
+  $('#btn-atras').hidden = (VISTA.tipo === 'portada');
+  activarModo(EDIT, true);
+}
+
+function activarModo(on, silencioso){
+  EDIT = !!on;
+  document.body.setAttribute('data-edit', EDIT ? '1' : '0');
+  $('#btn-edit').setAttribute('aria-pressed', EDIT ? 'true' : 'false');
+  $$('[data-campo]').forEach(function(el){
+    if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') return;
+    if(EDIT) el.setAttribute('contenteditable', 'plaintext-only');
+    else el.removeAttribute('contenteditable');
+  });
+  actualizarBarra();
+  if(!silencioso){
+    toast(EDIT ? '✏️ Modo edición: los campos ámbar se pueden escribir'
+                : 'Modo vista pública');
+    if(EDIT) pintarQRs();
+  }
+}
+
+/* ==================================================================
+   RENDER COMPLETO
+================================================================== */
+function renderTodo(){
+  var hash = location.hash;
+  if(!hash || hash === '#' || hash === '#/'){
+    navegar();
+  } else {
+    // re-pinta la vista actual conservando la ruta
+    var h = hash.replace(/^#/, '');
+    if(h.indexOf('/c/')===0){ renderCategoria(h.slice(3), false); }
+    else if(h.indexOf('/p/')===0){ renderFicha(h.slice(3), false); }
+    else if(h==='/pedido'){ renderPedido(); }
+    else { navegar(); return; }
+    activarModo(EDIT, true);
+  }
+  actualizarBarra();
+}
+
+/* ==================================================================
+   MODO EDICIÓN — edición en línea
+================================================================== */
+function valorFormato(el, ruta){
+  var tipo = el.getAttribute('data-tipo');
+  var v = obtener(ruta);
+  if(tipo === 'num') return (v===null||v===undefined) ? '—' : (typeof v === 'number' ? String(v).replace('.', ',') : String(v));
+  return v==null ? '' : String(v);
+}
+function pintarCampo(el, ruta){
+  var tipo = el.getAttribute('data-tipo');
+  var v = obtener(ruta);
+  if(tipo === 'num') el.textContent = (v===null||v===undefined) ? '—' : soles(v);
+  else el.textContent = (v==null ? '' : String(v));
+}
+
+document.addEventListener('focusin', function(e){
+  var el = e.target.closest ? e.target.closest('[data-campo]') : null;
+  if(!el || !EDIT) return;
+  if(el.getAttribute('data-select')) return;
+  var ruta = el.getAttribute('data-campo');
+  if(el.getAttribute('data-tipo') === 'num') el.textContent = valorFormato(el, ruta);
+  el._ruta = ruta;
+});
+
+document.addEventListener('focusout', function(e){
+  var el = e.target.closest ? e.target.closest('[data-campo]') : null;
+  if(!el || !EDIT) return;
+  if(el.getAttribute('data-select')) return;
+  // Los campos de formulario (input/textarea/select) escriben por su propio
+  // canal (evento 'input'): procesarlos aquí borraría el valor con innerText.
+  if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') return;
+  var ruta = el._ruta || el.getAttribute('data-campo');
+  var bruto = (el.innerText || '').replace(/\u00a0/g,' ').trim();
+  if(el.getAttribute('data-tipo') === 'num'){
+    var n = parseNum(bruto);
+    if(JSON.stringify(n) !== JSON.stringify(obtener(ruta))){
+      historial(); asignar(ruta, n);
+    }
+    pintarCampo(el, ruta);
+  } else {
+    if(bruto !== String(obtener(ruta) == null ? '' : obtener(ruta))){
+      historial(); asignar(ruta, bruto);
+    }
+  }
+  guardar(); actualizarBarra();
+  // refresca los badges del mismo bloque sin redibujar la vista entera
+  refrescarBadges();
+});
+
+document.addEventListener('input', function(e){
+  var el = e.target;
+  if(!el.getAttribute || !el.getAttribute('data-campo')) return;
+  if(!EDIT) return;
+  var ruta = el.getAttribute('data-campo');
+  if(el.tagName === 'INPUT' && el.type !== 'radio'){
+    var v = el.getAttribute('data-tipo')==='num' ? parseNum(el.value) : el.value;
+    if(!el._tocado){ historial(); el._tocado = true; }
+    asignar(ruta, v);
+    guardar();
+    if(ruta === 'config.url' || ruta === 'config.numero') pintarQRs();
+    actualizarBarra();
+    return;
+  }
+  if(el.tagName === 'SELECT'){
+    historial(); asignar(ruta, el.value); guardar();
+    refrescarBadges();
+  }
+});
+
+function refrescarBadges(){
+  // Pinta en el sitio los badges de cada campo.
+  // Agrupa por CONTENEDOR y luego por ruta: la misma ruta (p. ej. el precio del
+  // producto 0) puede tener badges en la ficha y a la vez en la lista de
+  // categoría que quedó pintada en otra vista. Si se agrupara solo por ruta,
+  // los badges nuevos entrarían en un contenedor y se borrarían los del otro.
+  var grupos = {}, n = 0, i;
+  var todos = $$('.badge[data-ruta]');
+  for(i=0;i<todos.length;i++){
+    var cont = todos[i].parentNode;
+    if(!cont) continue;
+    if(!cont._bcId) cont._bcId = 'bc' + (++n);
+    if(!grupos[cont._bcId]) grupos[cont._bcId] = { cont: cont, rutas:{}, lista: [] };
+    var g = grupos[cont._bcId];
+    var ruta = todos[i].getAttribute('data-ruta');
+    g.rutas[ruta] = true;
+    g.lista.push(todos[i]);
+  }
+
+  Object.keys(grupos).forEach(function(k){
+    var grupo = grupos[k];
+    Object.keys(grupo.rutas).forEach(function(ruta){
+      var lista = grupo.lista.filter(function(b){ return b.getAttribute('data-ruta') === ruta; });
+      if(!lista.length || !lista[0].parentNode) return;
+      var ancla = lista[0], cont = grupo.cont;
+      if(cont !== ancla.parentNode) return;
+      var p = porIdDeRuta(ruta);
+      var tmp = document.createElement('div');
+      tmp.innerHTML = badgeRuta(ruta, p ? p.origen : null);
+      var nuevos = Array.prototype.slice.call(tmp.children);
+      if(!nuevos.length) return;
+      var frag = document.createDocumentFragment();
+      for(var j=0;j<nuevos.length;j++) frag.appendChild(nuevos[j]);
+      cont.insertBefore(frag, ancla);
+      for(var m=0;m<lista.length;m++){
+        if(lista[m].parentNode) lista[m].parentNode.removeChild(lista[m]);
+      }
+    });
+  });
+  actualizarBarra();
+}
+function porIdDeRuta(ruta){
+  var m = /^productos\.(\d+)/.exec(ruta);
+  if(!m) return null;
+  return D.productos[parseInt(m[1],10)] || null;
+}
+
+/* ==================================================================
+   ACCIONES GLOBALES (delegación de clics)
+================================================================== */
+function nuevoProducto(cat){
+  historial();
+  var n = D.productos.length + 1;
+  var id = 'prod-' + Date.now();
+  D.productos.push({
+    id:id, cat:cat, ilustracion: cat==='paneton'?'paneton':'cafe',
+    nombre:'Nuevo producto ' + n,
+    subtitulo:'Describe aquí el producto',
+    precio:null, origen:'supuesto',
+    descripcion:'Escribe la descripción del producto.',
+    nota:'', notaOrigen:'supuesto',
+    specs:[['Contenido neto','—'],['Canal','Detalle']]
+  });
+  guardar(); renderTodo(); toast('Producto añadido ✏️ escribe sus datos');
+}
+function moverProducto(i, dir){
+  var j = i + dir;
+  if(j < 0 || j >= D.productos.length) return;
+  historial();
+  var tmp = D.productos[i]; D.productos[i] = D.productos[j]; D.productos[j] = tmp;
+  guardar(); renderTodo();
+}
+function exportar(){
+  try{
+    var blob = new Blob([JSON.stringify({d:D, pedido:PEDIDO, form:FORM}, null, 2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'catalogo-chakra-datos.json';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 400);
+    toast('Datos exportados ⬇');
+  }catch(e){ cajaError('No se pudo exportar.', e.message); }
+}
+function importar(){
+  var inp = document.getElementById('input-import');
+  inp.value = '';
+  inp.onchange = function(){
+    var f = inp.files && inp.files[0]; if(!f) return;
+    var fr = new FileReader();
+    fr.onload = function(){
+      try{
+        var o = JSON.parse(fr.result);
+        var nuevo = o && o.d ? o.d : o;
+        if(!nuevo || !nuevo.productos) throw new Error('El archivo no tiene el formato esperado (falta "productos").');
+        historial();
+        D = nuevo;
+        if(o.pedido) PEDIDO = o.pedido;
+        if(o.form) FORM = o.form;
+        guardar(); renderTodo(); pintarQRs();
+        toast('Datos importados ⬆');
+      }catch(e){ cajaError('No se pudo importar el archivo.', e.message); }
+    };
+    fr.readAsText(f);
+  };
+  inp.click();
+}
+function restablecer(){
+  if(!confirm('¿Restablecer el catálogo a los datos originales? Se pierden los cambios guardados en este navegador.')) return;
+  historial();
+  D = clonar(ORIGINAL);
+  guardar(); renderTodo(); pintarQRs();
+  toast('Catálogo restablecido ♻');
+}
+
+document.addEventListener('click', function(ev){
+  var t = ev.target;
+  function cerca(sel){ return t.closest ? t.closest(sel) : null; }
+
+  var e;
+
+  // --- navegación ---
+  if((e = cerca('[data-cat]'))){
+    ir('#/c/' + e.getAttribute('data-cat')); return;
+  }
+  if((e = cerca('[data-abrir]'))){
+    ir('#/p/' + e.getAttribute('data-abrir')); return;
+  }
+  if((e = cerca('[data-add]'))){
+    agregar(e.getAttribute('data-add'), 1);
+    e.classList.add('hecho');
+    var p = porId(e.getAttribute('data-add'));
+    e.textContent = '✓ ' + PEDIDO.filter(function(i){return i.id===p.id;})[0].cant;
+    toast('Añadido: ' + p.nombre);
+    setTimeout(function(){
+      e.classList.remove('hecho');
+      e.textContent = '+ Agregar';
+    }, 1200);
+    return;
+  }
+  if((e = cerca('[data-add-ficha]'))){
+    agregar(e.getAttribute('data-add-ficha'), VISTA.cant || 1);
+    toast('Añadido al pedido ✅');
+    return;
+  }
+  if((e = cerca('[data-cotizar]'))){
+    var pc = porId(e.getAttribute('data-cotizar'));
+    if(pc) abrirWhatsApp(mensajeCotizacion(pc));
+    return;
+  }
+
+  // --- pedido ---
+  if((e = cerca('[data-res-del]'))){
+    var fila = e.closest('.res-fila');
+    quitar(fila.getAttribute('data-id'));
+    renderPedido(); actualizarBarra(); return;
+  }
+  if((e = cerca('[data-res-paso]'))){
+    var fila2 = e.closest('.res-fila');
+    var id2 = fila2.getAttribute('data-id');
+    var inp2 = fila2.querySelector('[data-res-cant]');
+    setCant(id2, (parseInt(inp2.value,10)||1) + parseInt(e.getAttribute('data-res-paso'),10));
+    renderPedido(); actualizarBarra(); return;
+  }
+  if(t.id === 'btn-wa'){
+    if(!PEDIDO.length){ toast('Tu pedido está vacío'); return; }
+    if(!String(D.config.numero).replace(/\D/g,'')){ toast('Falta el número de WhatsApp en Datos y ajustes'); return; }
+    abrirWhatsApp(mensajePedido());
+    return;
+  }
+  if(t.id === 'btn-copiar'){ copiar(mensajePedido(), 'Pedido copiado 📋 pégalo en WhatsApp'); return; }
+  if(t.id === 'barra-ir' || (e = cerca('#btn-carrito'))){ ir('#/pedido'); return; }
+
+  // --- stepper de ficha ---
+  if((e = cerca('[data-paso]'))){
+    var inC = document.getElementById('in-cant');
+    var v = (parseInt(inC.value,10)||1) + parseInt(e.getAttribute('data-paso'),10);
+    inC.value = Math.min(999, Math.max(1, v));
+    VISTA.cant = parseInt(inC.value,10);
+    var sub = document.getElementById('ficha-sub');
+    var pf = porId(VISTA.id);
+    if(sub && pf && typeof pf.precio==='number') sub.textContent = soles(pf.precio * VISTA.cant);
+    return;
+  }
+
+  // --- edición: specs ---
+  if((e = cerca('[data-del-spec]'))){
+    var idxP = D.productos.indexOf(porId(VISTA.id));
+    historial();
+    D.productos[idxP].specs.splice(parseInt(e.getAttribute('data-del-spec'),10), 1);
+    guardar(); renderFicha(VISTA.id, false); activarModo(EDIT, true); return;
+  }
+  if((e = cerca('[data-add-spec]'))){
+    historial();
+    D.productos[parseInt(e.getAttribute('data-add-spec'),10)].specs.push(['Nueva ficha','Valor']);
+    guardar(); renderFicha(VISTA.id, false); activarModo(EDIT, true); return;
+  }
+  // --- edición: productos ---
+  if((e = cerca('[data-nuevo]'))){ nuevoProducto(e.getAttribute('data-nuevo')); return; }
+  if((e = cerca('[data-orden]'))){
+    moverProducto(parseInt(e.getAttribute('data-i'),10), e.getAttribute('data-orden')==='arriba' ? -1 : 1);
+    return;
+  }
+  if((e = cerca('[data-dup]'))){
+    historial();
+    var copia = clonar(D.productos[parseInt(e.getAttribute('data-dup'),10)]);
+    copia.id = copia.id + '-copia-' + Date.now();
+    copia.nombre = copia.nombre + ' (copia)';
+    D.productos.splice(parseInt(e.getAttribute('data-dup'),10) + 1, 0, copia);
+    guardar(); renderTodo(); toast('Producto duplicado ⧉'); return;
+  }
+  if((e = cerca('[data-del]'))){
+    var di = parseInt(e.getAttribute('data-del'),10);
+    if(!confirm('¿Eliminar "' + D.productos[di].nombre + '"?')) return;
+    historial();
+    var elim = D.productos.splice(di,1)[0];
+    PEDIDO = PEDIDO.filter(function(it){ return it.id !== elim.id; });
+    guardar(); ir('#/c/' + elim.cat); renderTodo(); toast('Producto eliminado 🗑'); return;
+  }
+
+  // --- acciones sueltas ---
+  if((e = cerca('[data-acc]'))){
+    var acc = e.getAttribute('data-acc');
+    if(acc==='cartel'){ location.hash = 'cartel'; return; }
+    if(acc==='salir-cartel'){ ir('#/'); return; }
+    if(acc==='imprimir'){ window.print(); return; }
+    if(acc==='ajustes'){ $('#modal-ajustes').classList.add('abierto'); return; }
+    if(acc==='cerrar-modal'){ $('#modal-ajustes').classList.remove('abierto'); return; }
+    if(acc==='exportar'){ exportar(); return; }
+    if(acc==='importar'){ importar(); return; }
+    if(acc==='deshacer'){ deshacer(); return; }
+    if(acc==='restablecer'){ restablecer(); return; }
+  }
+});
+
+/* --- cabecera --- */
+$('#btn-atras').addEventListener('click', function(){ history.back(); });
+$('#btn-edit').addEventListener('click', function(){ activarModo(!EDIT); });
+$('#modal-ajustes').addEventListener('click', function(ev){
+  if(ev.target === this) this.classList.remove('abierto');
+});
+
+/* --- inputs de pedido --- */
+document.addEventListener('input', function(ev){
+  var f = ev.target.getAttribute ? ev.target.getAttribute('data-form') : null;
+  if(!f) return;
+  FORM[f] = ev.target.value;
+  guardar();
+});
+document.addEventListener('change', function(ev){
+  var f = ev.target.getAttribute ? ev.target.getAttribute('data-form') : null;
+  if(f){ FORM[f] = ev.target.value; guardar(); }
+});
+document.addEventListener('input', function(ev){
+  if(ev.target.id === 'in-cant'){
+    VISTA.cant = Math.min(999, Math.max(1, parseInt(ev.target.value,10)||1));
+    var sub = document.getElementById('ficha-sub');
+    var pf = porId(VISTA.id);
+    if(sub && pf && typeof pf.precio==='number') sub.textContent = soles(pf.precio * VISTA.cant);
+  }
+});
+
+/* --- teclado: Esc cierra modales --- */
+document.addEventListener('keydown', function(ev){
+  if(ev.key === 'Escape'){
+    $('#modal-ajustes').classList.remove('abierto');
+    if(location.hash === '#cartel') ir('#/');
+  }
+  if(ev.key === 'Enter' && EDIT && ev.target.getAttribute && ev.target.getAttribute('data-campo')){
+    if(ev.target.getAttribute('data-tipo') !== 'txt-multiline'){
+      ev.preventDefault(); ev.target.blur();
+    }
+  }
+});
+
+/* ==================================================================
+   ARRANQUE
+================================================================== */
+function iniciar(){
+  ORIGINAL = clonar(CATALOGO_SEED);
+  if(!cargar()) D = clonar(CATALOGO_SEED);
+  if(!D.categorias || !D.categorias.length) D.categorias = clonar(CATALOGO_SEED.categorias);
+
+  window.addEventListener('hashchange', navegar);
+
+  // enlaces de ajustes del modal
+  ['#aj-num','#aj-url','#aj-marca','#aj-tit2','#aj-zona','#aj-cat0','#aj-cat0l','#aj-cat1','#aj-cat1l']
+    .forEach(function(sel){ var el = $(sel); if(el) el.setAttribute('data-campo', el.getAttribute('data-campo')); });
+
+  navegar();
+  pintarQRs();
+  actualizarBarra();
+
+  // avisos de configuración de ejemplo
+  var av = $('#aj-url-aviso');
+  if(av){
+    av.innerHTML = D.config.urlEjemplo
+      ? '⚠️ Es la URL de ejemplo. Cámbiala por la dirección real donde publiques el catálogo: el QR depende de ella.'
+      : '✅ URL configurada.';
+  }
+  var nv = $('#aj-num-v');
+  if(nv) nv.textContent = D.config.numeroEjemplo ? (D.config.numero + ' (ejemplo)') : D.config.numero;
+
+  // sincroniza los campos del modal con los datos
+  ['#aj-num','#aj-url','#aj-marca','#aj-tit2','#aj-zona','#aj-cat0','#aj-cat0l','#aj-cat1','#aj-cat1l']
+    .forEach(function(sel){
+      var el = $(sel); if(!el) return;
+      var v = obtener(el.getAttribute('data-campo'));
+      el.value = v==null ? '' : v;
+    });
+
+  if(D.config.urlEjemplo && !location.hash){
+    setTimeout(function(){
+      toast('URL de ejemplo: cámbiala en ⚙️ Datos y ajustes');
+    }, 900);
+  }
+}
+
+try{
+  iniciar();
+}catch(err){
+  cajaError('No se pudo iniciar el catálogo.', (err && err.message ? err.message : String(err)) + (err && err.stack ? '\n' + err.stack : ''));
+}
+</script>
+</body>
+</html>
